@@ -50,13 +50,18 @@ create or replace package body client_api_pack is
   procedure block_client(p_client_id    client.client_id%type
                         ,p_block_reason client.blocked_reason%type) is
   begin
+    allow_changes(); -- разрещаем изменения
+  
+    -- проверяем ID клиента
+    if p_client_id is null then
+      raise_application_error(c_invalid_param_code, c_client_id_empty_msg);
+    end if;
+  
     -- проверяем причину
     if p_block_reason is null then
       raise_application_error(c_invalid_param_code,
                               c_block_reason_empty_msg);
     end if;
-  
-    allow_changes(); -- разрещаем изменения
   
     -- обновляем клиента
     update client cl
@@ -83,6 +88,10 @@ create or replace package body client_api_pack is
   begin
     allow_changes(); -- разрещаем изменения
   
+    if p_client_id is null then
+      raise_application_error(c_invalid_param_code, c_client_id_empty_msg);
+    end if;
+  
     -- обновляем клиента    
     update client cl
        set cl.is_blocked     = c_not_blocked
@@ -96,7 +105,7 @@ create or replace package body client_api_pack is
                               c_client_not_found_msg);
     end if;
   
-    disallow_changes(); -- запрещаем изменения    
+    disallow_changes(); -- запрещаем изменения
   
   exception
     when others then
@@ -138,9 +147,11 @@ create or replace package body client_api_pack is
        and cl.is_active = c_active
        for update nowait;
   exception
+    when e_object_locked then
+      raise_application_error(c_object_locked_code,
+                              c_object_locked_code_msg);
     when no_data_found then
-      raise_application_error(c_client_not_found_code,
-                              c_client_not_found_msg);       
+      raise_application_error(c_object_locked_code, c_client_not_found_msg);
   end;
 
 

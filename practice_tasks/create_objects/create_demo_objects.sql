@@ -192,5 +192,5 @@ alter table payment_detail add constraint payment_detail_field_fk foreign key (f
 create index payment_detail_field_i on payment_detail(field_id);
 
 --------- Последовательности ----------------------
-create sequence client_id_seq;
+create sequence client_seq;
 create sequence payment_seq;
