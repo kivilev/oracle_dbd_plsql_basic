@@ -19,7 +19,7 @@ is
   c_active      constant client.is_active%type := 1;
   c_not_blocked constant client.is_blocked%type := 0;
   v_current_dtime date := sysdate;
-  v_client_id     client.client_id%type;
+  p_client_id     client.client_id%type;
 begin
   dbms_output.put_line(v_message || '. Статус: ' || c_active ||
                        '. Блокировка: ' || c_not_blocked);
@@ -28,12 +28,12 @@ begin
   if p_client_data is not empty then
     for i in p_client_data.first .. p_client_data.last loop
       if (p_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
+        dbms_output.put_line('ID поля не может быть пустым');
       end if;
       if (p_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
+        dbms_output.put_line('Значение в поле не может быть пустым');
       end if;
-
+    
       dbms_output.put_line('Field_id: ' || p_client_data(i).field_id ||
                            '. Value: ' || p_client_data(i).field_value);
     end loop;
@@ -52,21 +52,21 @@ begin
     ,c_active
     ,c_not_blocked
     ,null)
-  returning client_id into v_client_id; -- возвращается новый ID из client_seq
+  returning client_id into p_client_id; -- возвращается новый ID из client_seq
 
-  dbms_output.put_line('Client_id of new client: ' || v_client_id);
+  dbms_output.put_line('Client_id of new client: ' || p_client_id);
 
   -- вставляем клиентские данные
   insert into client_data
     (client_id
     ,field_id
     ,field_value)
-    select v_client_id
+    select p_client_id
           ,value      (t).field_id
           ,value      (t).field_value
       from table(p_client_data) t;
 
-  return v_client_id;
+  return p_client_id;
 end;
 /
 
@@ -80,7 +80,7 @@ is
   c_active constant client.is_blocked%type := 1;
 begin
   if p_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   if p_block_reason is null then
@@ -109,7 +109,7 @@ is
   c_active        constant client.is_blocked%type := 1;
 begin
   if p_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   dbms_output.put_line(v_message || c_not_blocked|| '. ID: '|| p_client_id);
@@ -133,7 +133,7 @@ is
   c_active        constant client.is_blocked%type := 1;   
 begin
   if p_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   dbms_output.put_line(v_message || c_inactive || '. ID: '|| p_client_id);
@@ -155,16 +155,16 @@ create or replace procedure insert_or_update_data(p_client_id   client.client_id
 begin
 
   if p_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   if p_client_data is not empty then
     for i in p_client_data.first .. p_client_data.last loop
       if (p_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
+        dbms_output.put_line('ID поля не может быть пустым');
       end if;
       if (p_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
+        dbms_output.put_line('Значение в поле не может быть пустым');
       end if;
     
       dbms_output.put_line('Field_id: ' || p_client_data(i).field_id ||
@@ -206,7 +206,7 @@ create or replace procedure delete_data(p_client_id        client.client_id%type
   v_current_dtime timestamp := systimestamp;
 begin
   if p_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   if p_delete_field_ids is empty then

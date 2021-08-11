@@ -1,17 +1,17 @@
 create or replace package body client_api_pack is
 
-  g_api boolean := false; -- флажок изменения через API
+  g_is_api boolean := false; -- флажок изменения через API
 
   -- включение флажка изменения через API
   procedure allow_changes is
   begin
-    g_api := true;
+    g_is_api := true;
   end;
 
   -- выключение флажка изменения через API
   procedure disallow_changes is
   begin
-    g_api := false;
+    g_is_api := false;
   end;
 
   function create_client(p_client_data t_client_data_array)
@@ -158,7 +158,7 @@ create or replace package body client_api_pack is
   procedure is_changes_through_api is
   begin
     -- если флажок не стоит, значит изменения происходят не в API
-    if not g_api then
+    if not g_is_api then
       raise_application_error(c_manual_change_code,
                               c_manual_change_code_msg);
     end if;

@@ -1,9 +1,8 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 08.04.2021
 
-  Описание скрипта: пример задания 10. Проход по коллекциям
+  Описание скрипта: пример задания 9. Создание коллекций, добавление в API
 */
 
 /*
@@ -13,33 +12,18 @@
 
 -- Создание клиента
 declare
-  v_message       varchar2(200 char) := 'Клиент создан';
-  c_active        constant client.is_active%type := 1;
-  c_not_blocked   constant client.is_blocked%type := 0;
+  v_message varchar2(200 char) := 'Клиент создан';
+  c_active      constant client.is_active%type := 1;
+  c_not_blocked constant client.is_blocked%type := 0;
   v_current_dtime date := sysdate;
   v_client_data   t_client_data_array := t_client_data_array(t_client_data(1, 'email@email.com'),
                                                              t_client_data(2, '+7999000000'),
                                                              t_client_data(3, '10000000'));
+  v_client_id 		client.client_id%type;
 begin
   dbms_output.put_line(v_message || '. Статус: ' || c_active ||
                        '. Блокировка: ' || c_not_blocked);
   dbms_output.put_line(to_char(v_current_dtime, 'yyyy-mm-dd hh24:mi:ss'));
-  
-  if v_client_data is not empty then
-    for i in v_client_data.first..v_client_data.last loop
-      if(v_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
-      end if;
-      if(v_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
-      end if;
-      
-      dbms_output.put_line('Field_id: '|| v_client_data(i).field_id ||'. Value: '||v_client_data(i).field_value);
-    end loop;
-  else
-    dbms_output.put_line('Коллекция не содержит данных');
-  end if;
-  
 end;
 /
 
@@ -47,12 +31,12 @@ end;
 declare
 	v_message       varchar2(200 char) := 'Клиент заблокирован. Блокировка: ';
   c_blocked       constant client.is_blocked%type := 1;
-  v_reason        varchar2(200 char) := 'подозрительный перевод';
+  v_reason        client.blocked_reason%type := 'подозрительный перевод';
   v_current_dtime timestamp := systimestamp;
   v_client_id 		client.client_id%type := 1;
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   if v_reason is null then
@@ -72,7 +56,7 @@ declare
   v_client_id 		client.client_id%type := 1;
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   dbms_output.put_line(v_message || c_not_blocked|| '. ID: '|| v_client_id);
@@ -88,7 +72,7 @@ declare
   v_client_id 		client.client_id%type;
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   dbms_output.put_line(v_message || c_inactive || '. ID: '|| v_client_id);
@@ -105,23 +89,8 @@ declare
                                                              t_client_data(4, '14.07.1983'));  
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
-  
-  if v_client_data is not empty then
-    for i in v_client_data.first..v_client_data.last loop
-      if(v_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
-      end if;
-      if(v_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
-      end if;
-      
-      dbms_output.put_line('Field_id: '|| v_client_data(i).field_id ||'. Value: '||v_client_data(i).field_value);
-    end loop;
-  else
-    dbms_output.put_line('Коллекция не содержит данных');
-  end if;
 
   dbms_output.put_line(v_message|| '. ID: '|| v_client_id);
   dbms_output.put_line(to_char(v_current_dtime, '"date:"yyyymmdd" time:"hh24:mi'));
@@ -136,16 +105,11 @@ declare
   p_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
   if v_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
-  end if;
-
-  if p_delete_field_ids is empty then
-    dbms_output.put_line('Коллекция не содержит данных');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   dbms_output.put_line(v_message || '. ID: ' || v_client_id);
   dbms_output.put_line(to_char(v_current_dtime, 'ff4'));
-  dbms_output.put_line('Количество удаляемых полей: '||p_delete_field_ids.count());
 end;
 /
 

@@ -1,7 +1,6 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 09.08.2021
 
   Описание скрипта: пример задания 4. 
    - переменные/константы типа varchar2, number изменены в соответствии с рекомендациями
@@ -25,7 +24,7 @@ begin
 end;
 /
 
--- Блокировка клиента с указанием причины
+-- Блокировка клиента
 declare
   v_message       varchar2(200 char) := 'Клиент заблокирован. Блокировка: ';
   c_blocked       constant number(1) := 1;
@@ -33,7 +32,7 @@ declare
   v_current_dtime timestamp := systimestamp;
 begin
   dbms_output.put_line(v_message || c_blocked || '. Причина: ' || v_reason);
-  dbms_output.put_line(to_char(v_current_dtime, 'yyyy-mm-dd hh24:mi:ss.ff'));
+  dbms_output.put_line(to_char(v_current_dtime, 'yyyy-mm-dd hh24:mi:ss'));
 end;
 /
 
@@ -48,7 +47,7 @@ begin
 end;
 /
 
--- Клиент деактивирован
+-- Деактивация клиента
 declare
   v_message varchar2(200 char) := 'Клиент деактивирован. Статус активности: ';
   c_inactive constant number(1) := 0;
@@ -59,10 +58,10 @@ begin
 end;
 /
 
--- Вставка/обновление клиентских данных
+-- Добавление/изменение клиентских данных
 declare
   v_message varchar2(200 char) := 'Клиентские данные вставлены или обновлены по списку id_поля/значение';
-  v_current_dtime date := sysdate;  
+  v_current_dtime date := sysdate;
 begin
   dbms_output.put_line(v_message);
   dbms_output.put_line(to_char(v_current_dtime, '"date:"yyyymmdd" time:"hh24:mi'));

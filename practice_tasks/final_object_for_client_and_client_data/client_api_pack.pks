@@ -18,7 +18,7 @@ create or replace package client_api_pack is
   c_client_not_found_msg   constant varchar2(200 char) := 'Активный клиент не найден';
   c_invalid_param_code     constant number(10) := -20102;
   c_block_reason_empty_msg constant varchar2(200 char) := 'Пустая причина блокировки';
-  c_client_id_empty_msg    constant varchar2(200 char) := 'ID клиента не может быть пустым';
+  c_client_id_empty_msg    constant varchar2(200 char) := 'ID объекта не может быть пустым';
   c_manual_change_code     constant number(10) := -20103;
   c_manual_change_code_msg constant varchar2(200 char) := 'Нельзя изменять данные напрямую, только через API';
   c_manual_delete_code_msg constant varchar2(200 char) := 'Нельзя удалить клиента. Используйте деактивацию';

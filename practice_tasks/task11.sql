@@ -1,7 +1,6 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 08.04.2021
 
   Описание скрипта: пример задания 11. Использование SQL в PL/SQL
 */
@@ -32,10 +31,10 @@ begin
   if v_client_data is not empty then
     for i in v_client_data.first .. v_client_data.last loop
       if (v_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
+        dbms_output.put_line('ID поля не может быть пустым');
       end if;
       if (v_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
+        dbms_output.put_line('Значение в поле не может быть пустым');
       end if;
     
       dbms_output.put_line('Field_id: ' || v_client_data(i).field_id ||
@@ -76,13 +75,13 @@ end;
 declare
 	v_message       varchar2(200 char) := 'Клиент заблокирован. Блокировка: ';
   c_blocked       constant client.is_blocked%type := 1;
-  v_reason        varchar2(200 char) := 'подозрительный перевод';
+  v_reason        client.blocked_reason%type := 'подозрительный перевод';
   v_current_dtime timestamp := systimestamp;
   v_client_id 		client.client_id%type := 1;
   c_active        constant client.is_blocked%type := 1;
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   if v_reason is null then
@@ -111,7 +110,7 @@ declare
   c_active        constant client.is_blocked%type := 1; 
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   dbms_output.put_line(v_message || c_not_blocked|| '. ID: '|| v_client_id);
@@ -135,7 +134,7 @@ declare
   c_active        constant client.is_blocked%type := 1;   
 begin
   if v_client_id is null then
-	  dbms_output.put_line('ID клиента не может быть пустым');
+	  dbms_output.put_line('ID объекта не может быть пустым');
 	end if;
 
   dbms_output.put_line(v_message || c_inactive || '. ID: '|| v_client_id);
@@ -160,16 +159,16 @@ declare
                                                                            '14.07.1983'));
 begin
   if v_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   if v_client_data is not empty then
     for i in v_client_data.first .. v_client_data.last loop
       if (v_client_data(i).field_id is null) then
-        dbms_output.put_line('ID поля в данных не может быть пустым');
+        dbms_output.put_line('ID поля не может быть пустым');
       end if;
       if (v_client_data(i).field_value is null) then
-        dbms_output.put_line('Значение в данных не может быть пустым');
+        dbms_output.put_line('Значение в поле не может быть пустым');
       end if;
     
       dbms_output.put_line('Field_id: ' || v_client_data(i).field_id ||
@@ -212,7 +211,7 @@ declare
   p_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
   if v_client_id is null then
-    dbms_output.put_line('ID клиента не может быть пустым');
+    dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
   if p_delete_field_ids is empty then

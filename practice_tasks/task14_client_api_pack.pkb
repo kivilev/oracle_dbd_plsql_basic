@@ -1,12 +1,24 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 08.04.2021
 
-  Описание скрипта: пример задания 13. Создание пакетов
+  Описание скрипта: пример задания 14. Создание триггеров
 */
-
 create or replace package body client_api_pack is
+
+  g_is_api boolean := false; -- флажок изменения через API
+
+  -- включение флажка изменения через API
+  procedure allow_changes is
+  begin
+    g_is_api := true;
+  end;
+
+  -- выключение флажка изменения через API
+  procedure disallow_changes is
+  begin
+    g_is_api := false;
+  end;
 
   -- Создание клиента
   function create_client(p_client_data t_client_data_array)
@@ -15,6 +27,8 @@ create or replace package body client_api_pack is
     v_current_dtime date := sysdate;
     v_client_id     client.client_id%type;
   begin
+    allow_changes();
+    
     dbms_output.put_line(v_message || '. Статус: ' || c_active ||
                          '. Блокировка: ' || c_not_blocked);
     dbms_output.put_line(to_char(v_current_dtime, 'yyyy-mm-dd hh24:mi:ss'));
@@ -22,10 +36,10 @@ create or replace package body client_api_pack is
     if p_client_data is not empty then
       for i in p_client_data.first .. p_client_data.last loop
         if (p_client_data(i).field_id is null) then
-          dbms_output.put_line('ID поля в данных не может быть пустым');
+          dbms_output.put_line('ID поля не может быть пустым');
         end if;
         if (p_client_data(i).field_value is null) then
-          dbms_output.put_line('Значение в данных не может быть пустым');
+          dbms_output.put_line('Значение в поле не может быть пустым');
         end if;
       
         dbms_output.put_line('Field_id: ' || p_client_data(i).field_id ||
@@ -61,6 +75,8 @@ create or replace package body client_api_pack is
         from table(p_client_data) t;
   
     return v_client_id;
+
+    disallow_changes();
   end;
 
 
@@ -70,8 +86,10 @@ create or replace package body client_api_pack is
     v_message       varchar2(200 char) := 'Клиент заблокирован. Блокировка: ';
     v_current_dtime timestamp := systimestamp;
   begin
+    allow_changes();
+
     if p_client_id is null then
-      dbms_output.put_line('ID клиента не может быть пустым');
+      dbms_output.put_line('ID объекта не может быть пустым');
     end if;
   
     if p_block_reason is null then
@@ -88,6 +106,8 @@ create or replace package body client_api_pack is
           ,cl.blocked_reason = p_block_reason
      where cl.client_id = p_client_id
        and cl.is_active = c_active;
+
+    disallow_changes();
   end;
 
 
@@ -96,8 +116,10 @@ create or replace package body client_api_pack is
     v_message       varchar2(200 char) := 'Клиент разблокирован. Блокировка: ';
     v_current_dtime timestamp := systimestamp;
   begin
+    allow_changes();
+
     if p_client_id is null then
-      dbms_output.put_line('ID клиента не может быть пустым');
+      dbms_output.put_line('ID объекта не может быть пустым');
     end if;
   
     dbms_output.put_line(v_message || c_not_blocked || '. ID: ' ||
@@ -111,6 +133,8 @@ create or replace package body client_api_pack is
           ,cl.blocked_reason = null
      where cl.client_id = p_client_id
        and cl.is_active = c_active;
+
+    disallow_changes();
   end;
 
 
@@ -119,8 +143,10 @@ create or replace package body client_api_pack is
     v_message       varchar2(200 char) := 'Клиент деактивирован. Статус активности: ';
     v_current_dtime date := sysdate;
   begin
+    allow_changes();
+
     if p_client_id is null then
-      dbms_output.put_line('ID клиента не может быть пустым');
+      dbms_output.put_line('ID объекта не может быть пустым');
     end if;
   
     dbms_output.put_line(v_message || c_inactive || '. ID: ' ||
@@ -132,6 +158,16 @@ create or replace package body client_api_pack is
        set cl.is_active = c_inactive
      where cl.client_id = p_client_id
        and cl.is_active = c_active;
+
+    disallow_changes();
+  end;
+  
+  procedure is_changes_through_api is
+  begin
+    -- если флажок не стоит, значит изменения происходят не в API
+    if not g_is_api then
+      dbms_output.put_line('Изменения происходят не через API'); 
+    end if;
   end;
 
 end;

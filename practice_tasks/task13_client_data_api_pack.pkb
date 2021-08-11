@@ -8,16 +8,16 @@ create or replace package body client_data_api_pack is
   begin
   
     if p_client_id is null then
-      dbms_output.put_line('ID клиента не может быть пустым');
+      dbms_output.put_line('ID объекта не может быть пустым');
     end if;
   
     if p_client_data is not empty then
       for i in p_client_data.first .. p_client_data.last loop
         if (p_client_data(i).field_id is null) then
-          dbms_output.put_line('ID поля в данных не может быть пустым');
+          dbms_output.put_line('ID поля не может быть пустым');
         end if;
         if (p_client_data(i).field_value is null) then
-          dbms_output.put_line('Значение в данных не может быть пустым');
+          dbms_output.put_line('Значение в поле не может быть пустым');
         end if;
       
         dbms_output.put_line('Field_id: ' || p_client_data(i).field_id ||
@@ -58,7 +58,7 @@ create or replace package body client_data_api_pack is
     v_current_dtime timestamp := systimestamp;
   begin
     if p_client_id is null then
-      dbms_output.put_line('ID клиента не может быть пустым');
+      dbms_output.put_line('ID объекта не может быть пустым');
     end if;
   
     if p_delete_field_ids is empty then
