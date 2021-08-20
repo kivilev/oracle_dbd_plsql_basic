@@ -1,10 +1,18 @@
-------- 7. Табличные функции как источник данных
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1) Создадим коллекцию
+  Лекция 15. Процедуры и функции
+	
+  Описание скрипта: пример табличных функций как источник данных
+
+*/
+
+-- Создадим коллекцию
 create or replace type t_numbers is table of number(20);
 /
 
--- 2) Создадим функцию
+-- Создадим функцию
 create or replace function my_table_func return t_numbers
 is
 begin
@@ -12,9 +20,9 @@ begin
 end;
 /
 
-
--- 3) Обратимся к функции в SQL
+-- Обратимся к функции в SQL
 
 select * from table(my_table_func()); -- < 12c 
 
 select * from my_table_func(); -- >= 12c
+

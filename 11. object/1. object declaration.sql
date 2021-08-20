@@ -1,6 +1,13 @@
------ Пример 1. Создание объектов
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- Пример 1.1. Создание объекта на уровне схемы (только там и можно)
+  Лекция 11. Объекты
+	
+  Описание скрипта: примеры создания объектов
+*/
+
+---- Пример 1. Создание объекта на уровне схемы (только там и можно)
 create or replace type t_my_obj1  is object (
   id      number(30), 
   name    varchar2(200 char),
@@ -16,7 +23,7 @@ end;
 /
 
 
--- Пример 1.2. В отличии от записей модификаторы типов использовать нельзя
+---- Пример 2. В отличии от записей модификаторы типов использовать нельзя
 create or replace type t_my_obj2  is object (
   id      employees.employee_id%type, -- модификаторы использовать нельзя. Объект будет с ошибкой.
   name    varchar2(200 char),
@@ -25,7 +32,7 @@ create or replace type t_my_obj2  is object (
 /
 
 
--- Пример 1.3. Нельзя использовать типы в полях, которых нет в SQL. Например, boolean
+---- Пример 3. Нельзя использовать типы в полях, которых нет в SQL. Например, boolean
 create or replace type t_my_obj1  is object (
   id      number(30), 
   name    varchar2(200 char),

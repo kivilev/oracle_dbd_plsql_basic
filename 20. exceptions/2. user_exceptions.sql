@@ -1,6 +1,13 @@
-------- 2. Пользовательские исключения
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- Пример 1. Пользовательское исключение e_no_money определенное через объект exception
+  Лекция 20. Исключения
+	
+  Описание скрипта: примеры пользовательских исключений
+*/
+
+---- Пример 1. Пользовательское исключение e_no_money определенное через объект exception
 -- ORA-06510: PL/SQL: unhandled user-defined exception (Вызывающая среда не знает что есть e_no_money).
 declare
   e_no_money exception;
@@ -17,7 +24,7 @@ begin
 end;
 /
 
--- Пример 2. Пользовательское исключение определенное через raise_application_error
+---- Пример 2. Пользовательское исключение определенное через raise_application_error
 declare
   v_money    number(10,2) := 0;
 begin  
@@ -28,7 +35,7 @@ end;
 /
 
 
--- Пример 3. Комбинированный вариант. С перехватом пользовательского исключения exception.
+---- Пример 3. Комбинированный вариант. С перехватом пользовательского исключения exception.
 declare
   e_no_money exception;
   v_money    number(10, 2) := 0;

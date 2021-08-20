@@ -1,7 +1,8 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 20.03.2021
+
+  Лекция 6. Типы данных
 
   Описание скрипта: примеры с логическим типом boolean
 */

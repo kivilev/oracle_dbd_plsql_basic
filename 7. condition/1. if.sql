@@ -1,6 +1,13 @@
-------- Пример 1. Оператор IF
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1) Простой IF
+  Лекция 6. Типы данных
+
+  Описание скрипта: примеры с оператором IF
+*/
+
+---- Пример 1. Простой IF
 declare
   v_num number(1) := 1;
 begin
@@ -10,7 +17,7 @@ begin
 end;
 /
 
--- 2) Условие IF с веткой иначе
+---- Пример 2. Условие IF с веткой иначе
 declare
   v_num number(1) := 1;
 begin
@@ -22,7 +29,7 @@ begin
 end;
 /
 
--- 3) Множество веток ветвления
+---- Пример 3. Множество веток ветвления
 declare
   v_num number(1) := 1;
 begin
@@ -38,7 +45,7 @@ begin
 end;
 /
 
--- 4) IF Ленивый оператор
+---- Пример 4. IF Ленивый оператор
 declare
   function f1 return boolean
   is

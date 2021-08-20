@@ -1,4 +1,11 @@
------- Пример 2. Использование в PL/SQL
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция 11. Объекты
+	
+  Описание скрипта: примеры использование в PL/SQL
+*/
 
 -- Создадим наш объект
 create or replace type t_my_object is object
@@ -8,7 +15,7 @@ create or replace type t_my_object is object
 );
 /
 
--- Пример 2.1. Создание объекта и инициализация значениями
+---- Пример 1. Создание объекта и инициализация значениями
 declare
   v_obj1 t_my_object := t_my_object(777, 'Объект 1'); -- заполнение при создании
   v_obj2 t_my_object;
@@ -21,7 +28,7 @@ begin
 end;
 /
 
--- Пример 2.2. NULL и объекты
+---- Пример 2. NULL и объекты
 declare
   v_obj1 t_my_object := t_my_object(777, 'Объект 1'); -- заполнение при создании
 begin
@@ -32,7 +39,7 @@ begin
 end;
 /
 
--- Пример 2.3. Сравнение объектов
+---- Пример 3. Сравнение объектов
 declare
   v_obj1 t_my_object := t_my_object(777, 'Объект');
   v_obj2 t_my_object := t_my_object(777, 'Объект');
@@ -50,7 +57,7 @@ end;
 /
 
 
--- Пример 2.4. Использование в качестве параметров и возвращаемого результата
+---- Пример 4. Использование в качестве параметров и возвращаемого результата
 declare
   v_main_obj t_my_object := t_my_object(777, 'Объект');
     
@@ -73,7 +80,7 @@ end;
 /
 
 
--- Пример 2.5. Использование в DML и select
+---- Пример 5. Использование в DML и select
 declare
   v_part_employee t_my_object;
 begin
@@ -94,6 +101,7 @@ begin
   values (v_part_employee.id, v_part_employee.name, 'email@email.ru', sysdate, 'IT_PROG');
 end;
 /
+
 -- смотрим, новую строчку
 select t.*
   from employees t 

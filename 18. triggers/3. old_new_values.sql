@@ -1,5 +1,13 @@
-------- 2. OLD/NEW - значения
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 18. Триггеры
+	
+  Описание скрипта: примеры работы с OLD/NEW - значениями
+*/
+
+-- вспомогательная табличка
 drop table my_tab;
 create table my_tab
 (
@@ -7,7 +15,7 @@ create table my_tab
   name varchar2(100 char)  not null 
 );
 
---- Пример 1. AFTER на вставку данных (построчный)
+---- Пример 1. AFTER на вставку данных (построчный)
 create or replace trigger my_tab_a_i
 after  -- после
 insert -- вставка
@@ -24,7 +32,7 @@ select level, 'name'||level
   from dual connect by level <= 4;
 
 
---- Пример 2. Обычный BEFORE-триггер INSERT или UPDATE (построчный)
+---- Пример 2. Обычный BEFORE-триггер INSERT или UPDATE (построчный)
 create or replace trigger my_tab_b_iu
 before -- до
 insert or update  -- на вставку или обновление
@@ -60,7 +68,7 @@ update my_tab t
 
 
 
---- Пример 3. Обычный BEFORE-триггер на команду DELETE (построчный). Запрещает удалять записи с определенными ID
+---- Пример 3. Обычный BEFORE-триггер на команду DELETE (построчный). Запрещает удалять записи с определенными ID
 create or replace trigger my_tab_b_d_stmt
 before -- до
 delete -- удаление

@@ -1,8 +1,9 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 20.03.2021
 
+  Лекция 6. Типы данных
+	
   Описание скрипта: примеры с числами
 */
 
@@ -20,7 +21,7 @@ begin
 end;
 /
 
----- Пример 2. По умолчанию присваивает null
+---- Пример 2. По умолчанию присваивает null не 0!
 declare
   v_num3 number(3); -- значение будет равно null
   v_sum  number(3) := 10;

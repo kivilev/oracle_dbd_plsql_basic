@@ -1,10 +1,11 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 20.03.2021
+
+  Лекция 6. Типы данных
 
   Описание скрипта: примеры со строковыми типами
-*/ 
+*/
 
 ---- Пример 1. Объявление переменных с типами char, varchar2
 declare
@@ -16,18 +17,18 @@ begin
 end;
 /
 
----- Пример 2. По умолчанию значение равно NULL. При этом пустая строка не равна NULL.
+---- Пример 2. По умолчанию значение равно NULL. Пустая строка (v2) = null.
 declare
-  v_null_char char(10 char); -- по умолчанию null
-  v_empty_char char(10 char) := '';
+  v_null_str  varchar2(10 char); -- по умолчанию null
+  v_empty_str varchar2(10 char) := ''; -- по сути тоже самое
 begin
-  dbms_output.put_line(v_null_char);-- выведет "ничего"
 
-  if v_null_char is null then
-    dbms_output.put_line('v_null_char равна null'); 
+  if v_null_str is null then
+    dbms_output.put_line('v_null_str равна null');
   end if;
-    if v_empty_char is null then
-    dbms_output.put_line('v_empty_char равна null'); 
+  
+  if v_empty_str is null then
+    dbms_output.put_line('v_empty_str равна null');
   end if;
 end;
 /

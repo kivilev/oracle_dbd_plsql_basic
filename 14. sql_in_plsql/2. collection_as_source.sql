@@ -1,6 +1,14 @@
-------- Пример 2. Коллекция как источник данных
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1. Коллекция из скаляра как источник данных
+  Лекция 14. Использование SQL в PL/SQL
+	
+  Описание скрипта: примеры коллекции как источник данных
+
+*/
+
+---- Пример 1. Коллекция из скаляра как источник данных
 create or replace type t_numbers is table of number(10);
 /
 
@@ -18,7 +26,7 @@ begin
 end;
 /
 
--- 2. Коллекция из объекта как источник данных
+---- Пример 2. Коллекция из объекта как источник данных
 create or replace type t_obj is object (n1 number(10), v1 varchar2(20 char));
 /
 create or replace type t_obj_arr is table of t_obj;

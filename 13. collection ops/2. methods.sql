@@ -1,6 +1,13 @@
------ Пример 1. Встроенные методы коллекций
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1.1. first, last - индексы первого и последнего элементов
+  Лекция 13. Операции с коллекциями
+	
+  Описание скрипта: примеры встроенных методов коллекций
+*/
+
+----- Пример 1. first, last - индексы первого и последнего элементов
 declare
   type t_arr is table of number(30);
   v_arr t_arr := t_arr(777, 888, 999, 1111);
@@ -13,7 +20,7 @@ begin
 end;
 /
 
--- 1.2. prior, next - индексы предыдщуего или следуюещо элементов от переданного индекса
+----- Пример 2. prior, next - индексы предыдщуего или следуюещо элементов от переданного индекса
 declare
   type t_arr is table of number(30);
   v_arr         t_arr := t_arr(777, 888, 999, 1111);
@@ -30,7 +37,7 @@ begin
 end;
 /
 
--- 1.3. exists - проверка на существование элемента
+----- Пример 3. exists - проверка на существование элемента
 declare
   type t_arr is table of number(30);
   v_arr t_arr := t_arr(777, 10, 100);
@@ -49,7 +56,7 @@ begin
 end;
 /
 
--- 1.4. extend - расширение коллекции
+----- Пример 4. extend - расширение коллекции
 declare
   type t_arr is table of number(30);
   v_arr t_arr := t_arr();
@@ -60,7 +67,7 @@ begin
 end;
 /
 
--- 1.5. count - количество элементов в коллекции
+----- Пример 5. count - количество элементов в коллекции
 declare
   type t_arr is table of number(30);
   v_arr t_arr := t_arr(1, 10, 100);
@@ -69,7 +76,7 @@ begin
 end;
 /
 
--- 1.6. limit - максимальный размер массива varray
+----- Пример 6. limit - максимальный размер массива varray
 declare
   type t_arr is varray(10) of number(30);
   v_arr t_arr := t_arr();
@@ -79,7 +86,7 @@ begin
 end;
 /
 
--- 1.7. delete - удаление элементов из коллекции по индексы
+----- Пример 7. delete - удаление элементов из коллекции по индексы
 declare
   type t_arr is table of number(30);
   v_arr t_arr := t_arr(777, 10, 100);
@@ -101,7 +108,7 @@ begin
 end;
 /
 
--- 1.8. trim - усечение varray с конца 
+----- Пример 8. trim - усечение varray с конца 
 declare
   type t_arr is varray(10) of number(30);
   v_arr t_arr := t_arr(777, 888, 999);

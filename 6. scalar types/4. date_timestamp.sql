@@ -1,9 +1,10 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 20.03.2021
 
-  Описание скрипта: примеры с типами дата/время
+  Лекция 6. Типы данных
+
+  Описание скрипта: примеры с типами date, timestamp
 */
 
 ---- Пример 1. Объявление переменных с типом date
@@ -13,7 +14,7 @@ declare
   v_date_def     date; -- по умолчанию null
 begin
   -- Если выводить как есть, то вывод будет соответствовать региональным настройкам
-  dbms_output.put_line('v_date_sysdate (по умолчанию) => ' || v_date_sysdate); -- не выводится время
+  dbms_output.put_line('v_date_sysdate (по умолчанию) => ' || v_date_sysdate); 
   dbms_output.put_line('v_date_sysdate (с форматом) => ' || to_char(v_date_sysdate, 'dd.mm.yyyy hh24:mi:ss')); -- добавляем формат вывода
 
   dbms_output.put_line('v_date_1407 (по умолчанию) => ' || v_date_1407);

@@ -1,5 +1,13 @@
-------- 3. Составные триггеры
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 18. Триггеры
+	
+  Описание скрипта: примеры составных триггеров
+*/
+
+-- вспомогательная табличка
 drop table my_tab;
 create table my_tab
 (
@@ -7,7 +15,7 @@ create table my_tab
   name varchar2(100 char)  not null 
 );
 
---- Пример 1. Составной триггер. Регистрирует имя юзера, который менял строки.
+---- Пример 1. Составной триггер. Регистрирует имя юзера, который менял строки.
 create or replace trigger my_tab_iu_c
 for update or insert -- для вставки или обновления
 on my_tab -- на таблицу my_tab

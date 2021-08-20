@@ -1,7 +1,13 @@
-------- 2. Оператор CASE
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 6. Типы данных
 
--- Пример 1. Простой CASE
+  Описание скрипта: примеры с оператором CASE
+*/
+
+---- Пример 1. Простой CASE
 declare
   v_val  number(30) := 100;
   v_res  number(30) := 1;
@@ -23,7 +29,7 @@ begin
 end;
 /
 
--- Пример 2. Поисковый CASE
+---- Пример 2. Поисковый CASE
 declare
   v_val  number(30) := 100;
   v_str  varchar2(20 char) := 'Условие2';
@@ -46,7 +52,7 @@ begin
 end;
 /
 
--- Пример 3. Выражение CASE
+---- Пример 3. Выражение CASE
 declare
   v_val  number(30) := 100;
   v_str  varchar2(20 char) := 'Условие2';
@@ -67,7 +73,7 @@ begin
 end;
 /
 
--- Пример 4. Выражение + поисковый CASE
+---- Пример 4. Выражение + поисковый CASE
 declare
   v_val  varchar2(30 char) := 'Значение1';
   v_res  number(30) := 1; 

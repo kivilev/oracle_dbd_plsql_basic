@@ -1,13 +1,22 @@
-------- Пример 3. INSERT в PL/SQL
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 14. Использование SQL в PL/SQL
+	
+  Описание скрипта: примеры INSERT в PL/SQL
+
+*/
+
+-- Создадим вспомогательную табличку
 create table example_12_3(
 id   number(3),
 name varchar2(200 char)
 );
-
+-- и последовательность для генерации ID
 create sequence example_12_3_seq;
 
--- 1. Возврашаем одно поле из INSERT
+---- Пример 1. Возврашаем одно поле из INSERT
 declare
   v_new_id example_12_3.id%type;
 begin
@@ -19,7 +28,7 @@ begin
 end;
 /
 
--- 2. Возврашаем два поля в две переменные из INSERT
+---- Пример 2. Возврашаем два поля в две переменные из INSERT
 declare
   v_new_id   example_12_3.id%type;
   v_new_name example_12_3.name%type;

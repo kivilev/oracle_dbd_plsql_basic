@@ -27,16 +27,20 @@ begin
   dbms_output.put_line(to_char(v_current_dtime, 'yyyy-mm-dd hh24:mi:ss'));
   
   if v_client_data is not empty then
-    for i in v_client_data.first..v_client_data.last loop
+
+		for i in v_client_data.first..v_client_data.last loop
+
       if(v_client_data(i).field_id is null) then
         dbms_output.put_line('ID поля не может быть пустым');
       end if;
+
       if(v_client_data(i).field_value is null) then
         dbms_output.put_line('Значение в поле не может быть пустым');
       end if;
       
       dbms_output.put_line('Field_id: '|| v_client_data(i).field_id ||'. Value: '||v_client_data(i).field_value);
     end loop;
+
   else
     dbms_output.put_line('Коллекция не содержит данных');
   end if;

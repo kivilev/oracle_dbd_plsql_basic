@@ -1,6 +1,13 @@
-------- 2. WHILE (пока выполняется условие)
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- Пример 1. Инкремент
+  Лекция 7. Условия и переходы
+
+  Описание скрипта: примеры с WHILE (пока выполняется условие)
+*/
+
+---- Пример 1. Инкремент
 declare
   v_i    number(30) := 0;
 begin
@@ -11,7 +18,7 @@ begin
 end;
 /
 
--- Пример 2. Boolean
+---- Пример 2. Boolean
 declare
   v_i    number(30) := 0;
   v_flag boolean := true;

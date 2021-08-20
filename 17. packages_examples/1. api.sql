@@ -1,49 +1,58 @@
---------- Пример. Использование пакетов для создания API
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-drop table currency;
-create table currency
+  Лекция 16. Использование пакетов
+	
+  Описание скрипта: использование пакетов для создания API
+
+*/
+
+-- табличка с валютами
+drop table my_currency;
+create table my_currency
 (
   curr_id  number(10),
   iso_code char(3 char)
 );
 
-alter table currency add constraint currency_pk primary key (curr_id);
+alter table my_currency add constraint my_currency_pk primary key (curr_id);
 
 
-create or replace package currency_pack is
+create or replace package my_currency_pack is
 
-  -- Purpose : Api for currency table
+  -- Purpose : Api for my_currency table
 
   -- Create new row
-  procedure create_currency
+  procedure create_my_currency
   (
-    p_curr_id  currency.curr_id%type
-   ,p_iso_code currency.iso_code%type
+    p_curr_id  my_currency.curr_id%type
+   ,p_iso_code my_currency.iso_code%type
   );
 
   -- Update row
-  procedure update_currency
+  procedure update_my_currency
   (
-    p_curr_id      currency.curr_id%type
-   ,p_new_iso_code currency.iso_code%type
+    p_curr_id      my_currency.curr_id%type
+   ,p_new_iso_code my_currency.iso_code%type
   );
 
   -- Delete row
-  procedure delete_currency(p_curr_id currency.curr_id%type);
+  procedure delete_my_currency(p_curr_id my_currency.curr_id%type);
 
-end currency_pack;
+end my_currency_pack;
 /
 
-create or replace package body currency_pack is
+create or replace package body my_currency_pack is
 
   -- Create new row
-  procedure create_currency
+  procedure create_my_currency
   (
-    p_curr_id  currency.curr_id%type
-   ,p_iso_code currency.iso_code%type
+    p_curr_id  my_currency.curr_id%type
+   ,p_iso_code my_currency.iso_code%type
   ) is
   begin
-    insert into currency
+    insert into my_currency
       (curr_id
       ,iso_code)
     values
@@ -56,31 +65,31 @@ create or replace package body currency_pack is
   end;
 
   -- Update row
-  procedure update_currency
+  procedure update_my_currency
   (
-    p_curr_id      currency.curr_id%type
-   ,p_new_iso_code currency.iso_code%type
+    p_curr_id      my_currency.curr_id%type
+   ,p_new_iso_code my_currency.iso_code%type
   ) is
   begin
-    update currency c
+    update my_currency c
        set c.iso_code = p_new_iso_code
      where c.curr_id = p_curr_id;
   end;
 
   -- Delete row
-  procedure delete_currency(p_curr_id currency.curr_id%type) is
+  procedure delete_my_currency(p_curr_id my_currency.curr_id%type) is
   begin
-    delete currency c where c.curr_id = p_curr_id;
+    delete my_currency c where c.curr_id = p_curr_id;
   end;
 
-end currency_pack;
+end my_currency_pack;
 /
 
 ---- Тестируем
 begin
-  currency_pack.create_currency(p_curr_id => 840, p_iso_code => 'USD');
-  currency_pack.create_currency(p_curr_id => 810, p_iso_code => 'RUR');  
+  my_currency_pack.create_my_currency(p_curr_id => 840, p_iso_code => 'USD');
+  my_currency_pack.create_my_currency(p_curr_id => 810, p_iso_code => 'RUR');  
 end;
 /
 
-select * from currency;
+select * from my_currency;

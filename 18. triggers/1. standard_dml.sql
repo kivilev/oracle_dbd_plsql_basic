@@ -1,5 +1,13 @@
-------- 1. DML-триггеры. Обычные
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 18. Триггеры
+	
+  Описание скрипта: примеры обычных DML-триггеров
+*/
+
+-- вспомогательная табличка
 drop table my_tab;
 create table my_tab
 (
@@ -7,7 +15,7 @@ create table my_tab
   name varchar2(100 char)  not null 
 );
 
---- Пример 1. AFTER на вставку данных (построчный)
+---- Пример 1. AFTER на вставку данных (построчный)
 create or replace trigger my_tab_a_i
 after  -- после
 insert -- вставка
@@ -23,7 +31,7 @@ insert into my_tab
 select level, 'name'||level from dual connect by level <= 4;
 
 
---- Пример 2. Обычный BEFORE-триггер INSERT или UPDATE (построчный)
+---- Пример 2. Обычный BEFORE-триггер INSERT или UPDATE (построчный)
 create or replace trigger my_tab_b_iu
 before -- до
 insert or update  -- на вставку или обновление
@@ -40,7 +48,7 @@ select level, 'name'||level from dual connect by level <= 5;
 
 
 
---- Пример 3. Обычный BEFORE-триггер на операцию DELETE в целом.
+---- Пример 3. Обычный BEFORE-триггер на операцию DELETE в целом.
 -- запрещает удалять записи
 create or replace trigger my_tab_b_d_stmt
 before -- до

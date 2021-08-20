@@ -1,6 +1,13 @@
-------- 5. Стэк вызова
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
------- Пример 1. Пакет dbms_utility
+  Лекция 20. Исключения
+	
+  Описание скрипта: демонстрация стэка вызова
+*/
+
+---- Пример 1. Пакет dbms_utility
 declare
 
   procedure p3 
@@ -28,7 +35,7 @@ end;
 /
 
 
------- Пример 2. utl_call_stack
+---- Пример 2. utl_call_stack
 create or replace procedure level_3 -- уровень 3
  is
 begin

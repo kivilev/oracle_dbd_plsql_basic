@@ -1,7 +1,6 @@
 /*
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
-  Дата: 24.03.2021
 
   Лекция 5. Область действия и видимость
   

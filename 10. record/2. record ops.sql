@@ -1,6 +1,13 @@
------- Пример 2. Операции над записями
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- Пример 2.1. Инициализация, обращение к полям
+  Лекция 10. Записи
+	
+  Описание скрипта: примеры с операциями над записями
+*/
+
+---- Пример 1. Инициализация, обращение к полям
 declare
   type t_my_rec is record(
      id   number(30) := 100
@@ -17,7 +24,7 @@ begin
 end;
 /
 
--- Пример 2.2. Записи и NULL
+---- Пример 2. Записи и NULL
 declare
   type t_my_rec is record(
      id   number(30) := 999
@@ -40,7 +47,7 @@ begin
 end;
 /
 
--- Пример 2.3. Сравнение записей
+---- Пример 3. Сравнение записей
 declare
   type t_my_rec is record(
      id   number(30) := 999
@@ -64,7 +71,7 @@ begin
 end;
 /
 
--- Пример 2.4. Вложенность записей
+---- Пример 4. Вложенность записей
 declare
   type t_my_rec is record(
      id   number(30) := 999
@@ -87,7 +94,7 @@ begin
 end;
 /
 
--- Пример 2.5. Использование в качестве параметров и возвращаемого результата
+---- Пример 5. Использование в качестве параметров и возвращаемого результата
 declare
   type t_my_rec is record(
      id   number(30) := 999
@@ -113,7 +120,7 @@ begin
 end;
 /
 
--- Пример 2.6. Использование в DML и select
+---- Пример 6. Использование в DML и select
 declare
   v_employee_row employees%rowtype; -- запись = строке таблицы
 begin
@@ -135,11 +142,9 @@ begin
   
 end;
 /
+
 -- смотрим, строку-источник и новую строчку
 select t.employee_id, t.email, t.salary 
   from employees t 
  where t.employee_id in (100, 777);
-
-
-
 

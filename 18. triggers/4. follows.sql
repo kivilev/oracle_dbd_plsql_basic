@@ -1,5 +1,13 @@
-------- 2. FOLLOWS - порядок следования
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
+  Лекция 18. Триггеры
+	
+  Описание скрипта: FOLLOWS - порядок следования
+*/
+
+-- вспомогательная табличка
 drop table my_tab;
 create table my_tab
 (
@@ -7,7 +15,7 @@ create table my_tab
   name varchar2(100 char)  not null 
 );
 
---- Пример 1. Три триггера AFTER. Сделаем 3 -> 2 -> 1
+---- Пример 1. Три триггера AFTER. Сделаем 3 -> 2 -> 1
 
 create or replace trigger my_tab_a_i_THREE
 after  -- после

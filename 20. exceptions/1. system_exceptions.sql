@@ -1,8 +1,15 @@
-------- 1. Системные исключения
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция 20. Исключения
+	
+  Описание скрипта: примеры системных исключений
+*/
 
 sys.standard;
 
--- Пример 1. Возникновение неименованного исключения в run-time
+---- Пример 1. Возникновение неименованного исключения в run-time
 -- ORA-06502: PL/SQL: numeric or value error: character to number conversion error
 declare
   v number;
@@ -13,7 +20,7 @@ begin
 end;
 /
 
--- Пример 2. Возникновение именованного исключения в run-time
+---- Пример 2. Возникновение именованного исключения в run-time
 -- ORA-01476: divisor is equal to zero
 declare
   v number := 10;
@@ -23,7 +30,7 @@ begin
 end;
 /
 
--- Пример 3. Вызов вручную именнованного системного исключения.
+---- Пример 3. Вызов вручную именнованного системного исключения.
 -- ORA-01476: divisor is equal to zero
 begin
   raise ZERO_DIVIDE;

@@ -1,6 +1,14 @@
-------- Пример 4. UPDATE в PL/SQL
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- создадим таблицу
+  Лекция 14. Использование SQL в PL/SQL
+	
+  Описание скрипта: примеры UPDATE в PL/SQL
+
+*/
+
+-- Создадим вспомогательную табличку
 create table example_12_4(
 id   number(3),
 name varchar2(200 char)
@@ -14,7 +22,7 @@ commit;
 
 select * from example_12_4;
 
--- 1. Возврашаем одно поле в переменную после UPDATE
+---- Пример 1. Возврашаем одно поле в переменную после UPDATE
 declare
   v_upd_name example_12_4.name%type;
 begin
@@ -31,7 +39,7 @@ end;
 select * from example_12_4;
 
 
--- 2. Возврашаем одно поле нескольких обновленных строк в коллекцию после UPDATE
+---- Пример 2. Возврашаем одно поле нескольких обновленных строк в коллекцию после UPDATE
 declare
   type t_names is table of example_12_4.name%type; -- создаем тип коллекций
   v_names t_names;
@@ -51,7 +59,7 @@ begin
 end;
 /
 
--- 3. Возврашаем два поля нескольких обновленных строк в коллекции после UPDATE
+---- Пример 3. Возврашаем два поля нескольких обновленных строк в коллекции после UPDATE
 declare
   type t_ids is table of example_12_4.id%type; -- создаем тип коллекций
   type t_names is table of example_12_4.name%type; -- создаем тип коллекций

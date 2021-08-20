@@ -1,6 +1,14 @@
-------- Пример 1. Сохранение результатов выполнения SELECT 
+/*
+  Курс: PL/SQL.Basic
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1. Выбор в переменную
+  Лекция 14. Использование SQL в PL/SQL
+	
+  Описание скрипта: примеры сохранения результатов выполнения SELECT 
+
+*/
+
+---- Пример 1. Выбор в переменную
 declare
   v_num number(10);
 begin
@@ -11,7 +19,7 @@ begin
 end;
 /
 
--- 2. Выбор в коллекцию
+---- Пример 2. Выбор в коллекцию
 declare
   type t_arr is table of user_objects.object_id%type;
   v_arr t_arr;
@@ -25,7 +33,7 @@ begin
 end;
 /
 
--- 3. Ошибка выборки в переменную при отсутствии строки (no data found)
+---- Пример 3. Ошибка выборки в переменную при отсутствии строки (no data found)
 declare
   v_num number(10);
 begin
@@ -36,7 +44,7 @@ begin
 end;
 /
 
--- 4. Ошибка выборки в переменную при отсутствии строки (too many rows - exact fetch returns more than requested number of rows)
+---- Пример 4. Ошибка выборки в переменную при отсутствии строки (too many rows - exact fetch returns more than requested number of rows)
 declare
   v_num user_objects.object_id%type;
 begin
