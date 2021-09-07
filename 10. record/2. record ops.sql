@@ -107,7 +107,7 @@ declare
   is
     v_var t_my_rec := p_param; -- сразу присваиваем значение от вх параметра
   begin
-    v_var.id := v_var.id + 1000; -- прибавдяем + 1000
+    v_var.id := v_var.id + 1000; -- прибавляем + 1000
     return v_var; -- возвращаем
   end;
  

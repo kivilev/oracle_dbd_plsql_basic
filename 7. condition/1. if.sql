@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 6. Типы данных
+  Лекция 7. Условия и переходы
 
   Описание скрипта: примеры с оператором IF
 */
