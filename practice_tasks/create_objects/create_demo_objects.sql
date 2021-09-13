@@ -175,7 +175,7 @@ commit;
 -------- Создание сущности "Детали платежа"
 create table payment_detail
 (
-  payment_id   number(30) not null,
+  payment_id   number(38) not null,
   field_id     number(10) not null,
   field_value  varchar2(200 char) not null
 );
