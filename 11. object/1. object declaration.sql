@@ -25,12 +25,11 @@ end;
 
 ---- Пример 2. В отличии от записей модификаторы типов использовать нельзя
 create or replace type t_my_obj2  is object (
-  id      employees.employee_id%type, -- модификаторы использовать нельзя. Объект будет с ошибкой.
+  id      hr.employees.employee_id%type, -- модификаторы использовать нельзя. Объект будет с ошибкой.
   name    varchar2(200 char),
   enabled boolean
 );
 /
-
 
 ---- Пример 3. Нельзя использовать типы в полях, которых нет в SQL. Например, boolean
 create or replace type t_my_obj1  is object (

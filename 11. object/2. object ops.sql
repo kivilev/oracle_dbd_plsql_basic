@@ -32,7 +32,9 @@ end;
 declare
   v_obj1 t_my_object := t_my_object(777, 'Объект 1'); -- заполнение при создании
 begin
-  -- не надо перечислять поля и каждое сравнивать с null
+	v_obj1 := null;
+  
+	-- не надо перечислять поля и каждое сравнивать с null
   if v_obj1 is null then
     dbms_output.put_line('It''s null!'); 
   end if;
