@@ -208,24 +208,24 @@ declare
   v_message       varchar2(200 char) := 'Клиентские данные удалены по списку id_полей';
   v_current_dtime timestamp := systimestamp;
   v_client_id     client.client_id%type := 100;
-  p_delete_field_ids t_number_array := t_number_array(2, 3);
+  v_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
   if v_client_id is null then
     dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
-  if p_delete_field_ids is empty then
+  if v_delete_field_ids is empty then
     dbms_output.put_line('Коллекция не содержит данных');
   end if;
 
   dbms_output.put_line(v_message || '. ID: ' || v_client_id);
   dbms_output.put_line(to_char(v_current_dtime, 'ff4'));
-  dbms_output.put_line('Количество удаляемых полей: '||p_delete_field_ids.count());
+  dbms_output.put_line('Количество удаляемых полей: '||v_delete_field_ids.count());
 
   -- удаляем клиентские данные
   delete client_data cd
    where cd.client_id = p_client_id
-     and cd.field_id in (select value(t) from table(p_delete_field_ids) t);
+     and cd.field_id in (select value(t) from table(v_delete_field_ids) t);
        
 end;
 /

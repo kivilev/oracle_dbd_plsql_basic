@@ -102,7 +102,7 @@ declare
   v_message       varchar2(200 char) := 'Клиентские данные удалены по списку id_полей';
   v_current_dtime timestamp := systimestamp;
   v_client_id     client.client_id%type := 100;
-  p_delete_field_ids t_number_array := t_number_array(2, 3);
+  v_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
   if v_client_id is null then
     dbms_output.put_line('ID объекта не может быть пустым');
