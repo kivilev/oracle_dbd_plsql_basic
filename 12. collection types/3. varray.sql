@@ -11,7 +11,7 @@
 create or replace type t_numbers_v  is  varray(3)  of  number(30,0);
 /
 declare
-  v_array t_numbers; -- переменная типа вложенная таблица
+  v_array t_numbers_v; -- переменная типа varray
 begin
   null; 
 end;
@@ -20,7 +20,7 @@ end;
 ---- Пример 2. Varray с элементами типа date, определение на уровне PL/SQL-блока
 declare
   type t_dates_v is varray(30) of date; -- определяем тип
-  v_array t_dates_v; -- переменная типа вложенная таблица
+  v_array t_dates_v; -- переменная типа varray
 begin
   null; 
 end;
@@ -29,7 +29,7 @@ end;
 ---- Пример 3. Varray с элементами типа boolean, определение на уровне PL/SQL-блока 
 declare
   type t_booleans_v is varray(10) of boolean;-- определяем тип
-  v_array t_booleans_v; -- переменная типа вложенная таблица
+  v_array t_booleans_v; -- переменная типа varray
 begin
   null;
 end;

@@ -27,7 +27,7 @@ end;
 
 ---- Пример 3. Определение ассоц массива из записей (строк таблицы employees), ключ строка
 declare
-  type t_ass_arr is table of employees%rowtype index by varchar2(30 char);
+  type t_ass_arr is table of hr.employees%rowtype index by varchar2(30 char);
   v_array t_ass_arr;
 begin
   null;
