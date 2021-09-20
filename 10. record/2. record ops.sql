@@ -61,8 +61,8 @@ begin
   
   -- if v_my_rec = v_my_rec2 then -- так писать нельзя будет ошибка
   -- правильно сравнивать по полям, не забываем про null
-  if ((v_my_rec.id = v_my_rec.id) or (v_my_rec.id is null and v_my_rec2.id is null)) and
-     ((v_my_rec.name = v_my_rec.name) or (v_my_rec.name is null and v_my_rec2.name is null)) then
+  if ((v_my_rec.id = v_my_rec2.id) or (v_my_rec.id is null and v_my_rec2.id is null)) and
+     ((v_my_rec.name = v_my_rec2.name) or (v_my_rec.name is null and v_my_rec2.name is null)) then
   
     dbms_output.put_line('Записи одинаковые'); 
   
