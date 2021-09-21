@@ -21,7 +21,7 @@ declare
   v_new_id example_12_3.id%type;
 begin
   insert into example_12_3 
-  values (example_12_3_seq.nextval, example_12_3_seq.nextval||'_name')
+  values (example_12_3_seq.nextval, example_12_3_seq.currval||'_name')
   returning id into v_new_id;
   
   dbms_output.put_line('New id: '|| v_new_id); 
@@ -34,7 +34,7 @@ declare
   v_new_name example_12_3.name%type;
 begin
   insert into example_12_3 
-  values (example_12_3_seq.nextval, example_12_3_seq.nextval||'_name')
+  values (example_12_3_seq.nextval, example_12_3_seq.currval||'_name')
   returning id, name into v_new_id, v_new_name;
   
   dbms_output.put_line('New id: '|| v_new_id); 

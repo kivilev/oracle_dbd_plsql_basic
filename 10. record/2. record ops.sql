@@ -57,7 +57,7 @@ declare
   v_my_rec2 t_my_rec;
 begin
   dbms_output.put_line('v_my_rec: '||v_my_rec.id ||' - '|| v_my_rec.name);
-  dbms_output.put_line('v_my_rec2: '||v_my_rec.id ||' - '|| v_my_rec.name);
+  dbms_output.put_line('v_my_rec2: '||v_my_rec2.id ||' - '|| v_my_rec2.name);
   
   -- if v_my_rec = v_my_rec2 then -- так писать нельзя будет ошибка
   -- правильно сравнивать по полям, не забываем про null
