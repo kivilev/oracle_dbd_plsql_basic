@@ -32,7 +32,9 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
+select * from client_data cd where cd.client_id = 1 order by cd.field_id;
+
 
 ----- Проверка блокировки клиента
 declare
@@ -44,7 +46,7 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
 
 ----- Проверка разблокировки клиента
 declare
@@ -55,7 +57,7 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
 
 
 ----- Проверка деактивации клиента
@@ -67,7 +69,7 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
 
 ----- Проверка вставки/изменения данных
 -- до
@@ -85,7 +87,8 @@ declare
                                                              t_client_data(4,
                                                                            '14.07.1983'));
 begin
-  insert_or_update_data(p_client_id => v_client_id, p_client_data => v_client_data);
+  insert_or_update_client_data(p_client_id => v_client_id, p_client_data => v_client_data);
+	commit;
 end;
 /
 
@@ -102,7 +105,8 @@ declare
   v_client_id     client.client_id%type := 4;
   v_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
-  delete_data(p_client_id => v_client_id, p_delete_field_ids => v_delete_field_ids);
+  delete_client_data(p_client_id => v_client_id, p_delete_field_ids => v_delete_field_ids);
+	commit;
 end;
 /
 

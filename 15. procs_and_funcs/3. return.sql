@@ -57,11 +57,15 @@ end;
 
 ---- Пример 4. Функция созданная без return.
 -- растяпа-разработчик забыл указать return
-create or replace function func_wo_return return boolean is
+create or replace function func_wo_return return number
+is
 begin
   null;
 end;
 /
 
+select status, t.* from user_objects t where t.OBJECT_NAME = 'FUNC_WO_RETURN';
 
+-- ORA-06503: PL/SQL: Function returned without value
+select func_wo_return() from dual;
 

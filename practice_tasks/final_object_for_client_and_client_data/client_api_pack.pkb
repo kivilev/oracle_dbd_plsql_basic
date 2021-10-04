@@ -92,14 +92,14 @@ create or replace package body client_api_pack is
       raise_application_error(c_invalid_param_code, c_client_id_empty_msg);
     end if;
   
-    -- обновляем клиента    
+    -- обновляем клиента
     update client cl
        set cl.is_blocked     = c_not_blocked
           ,cl.blocked_reason = null
      where cl.client_id = p_client_id
        and cl.is_active = c_active;
   
-    -- проверяем было ли обновление  
+    -- проверяем было ли обновление
     if sql%rowcount = 0 then
       raise_application_error(c_client_not_found_code,
                               c_client_not_found_msg);

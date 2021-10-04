@@ -1,7 +1,7 @@
 create or replace package body client_data_api_pack is
 
   -- Добавление/изменение клиентских данных
-  procedure insert_or_update_data(p_client_id   client.client_id%type
+  procedure insert_or_update_client_data(p_client_id   client.client_id%type
                                  ,p_client_data t_client_data_array) is
     v_message       varchar2(200 char) := 'Клиентские данные вставлены или обновлены по списку id_поля/значение';
     v_current_dtime date := sysdate;
@@ -52,7 +52,7 @@ create or replace package body client_data_api_pack is
   end;
 
   -- Удаление клиентских данных
-  procedure delete_data(p_client_id        client.client_id%type
+  procedure delete_client_data(p_client_id        client.client_id%type
                        ,p_delete_field_ids t_number_array) is
     v_message       varchar2(200 char) := 'Клиентские данные удалены по списку id_полей';
     v_current_dtime timestamp := systimestamp;

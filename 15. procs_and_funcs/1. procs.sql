@@ -16,6 +16,9 @@ begin
 end;
 /
 
+select status, t.* from user_objects t where t.object_name = 'PROC1';
+
+
 ---- Пример 2. Локальная процедура без параметров. Уровень: PLSQL-блок.
 declare
   

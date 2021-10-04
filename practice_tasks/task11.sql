@@ -224,7 +224,7 @@ begin
 
   -- удаляем клиентские данные
   delete client_data cd
-   where cd.client_id = p_client_id
+   where cd.client_id = v_client_id
      and cd.field_id in (select value(t) from table(v_delete_field_ids) t);
        
 end;

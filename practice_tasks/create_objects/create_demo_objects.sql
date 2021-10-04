@@ -15,7 +15,7 @@ drop table payment_detail_field;
 drop table payment;
 drop table currency;
 
-drop sequence client_id_seq;
+drop sequence client_seq;
 drop sequence payment_seq;
 
 -------- Создание сущности "Клиент"

@@ -33,11 +33,12 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
+select * from client_data cd where cd.client_id = 1 order by cd.field_id;
 
 ----- Проверка блокировки клиента
 declare
-  v_client_id client.client_id%type := 21;
+  v_client_id client.client_id%type := 1;
 begin
   client_api_pack.block_client(p_client_id    => v_client_id,
                p_block_reason => 'Блокировка в тесте');
@@ -45,23 +46,23 @@ begin
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
 
 ----- Проверка разблокировки клиента
 declare
-  v_client_id client.client_id%type := 21;
+  v_client_id client.client_id%type := 1;
 begin
   client_api_pack.unblock_client(p_client_id => v_client_id);
   commit;
 end;
 /
 
-select * from client cl order by cl.client_id desc;
+select * from client cl where cl.client_id = 1;
 
 
 ----- Проверка деактивации клиента
 declare
-  v_client_id client.client_id%type := 21;
+  v_client_id client.client_id%type := 1;
 begin
   client_api_pack.deactivate_client(p_client_id => v_client_id);
   commit;
@@ -86,7 +87,7 @@ declare
                                                              t_client_data(4,
                                                                            '14.07.1983'));
 begin
-  client_data_api_pack.insert_or_update_data(p_client_id => v_client_id, p_client_data => v_client_data);
+  client_data_api_pack.insert_or_update_client_data(p_client_id => v_client_id, p_client_data => v_client_data);
 end;
 /
 
@@ -103,7 +104,7 @@ declare
   v_client_id     client.client_id%type := 4;
   v_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
-  client_data_api_pack.delete_data(p_client_id => v_client_id, p_delete_field_ids => v_delete_field_ids);
+  client_data_api_pack.delete_client_data(p_client_id => v_client_id, p_delete_field_ids => v_delete_field_ids);
 end;
 /
 

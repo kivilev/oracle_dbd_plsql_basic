@@ -37,7 +37,7 @@ create or replace package body client_data_api_pack is
     g_is_api := false;
   end;
 
-  procedure insert_or_update_data(p_client_id   client.client_id%type
+  procedure insert_or_update_client_data(p_client_id   client.client_id%type
                                  ,p_client_data t_client_data_array) is
   begin
     allow_changes(); -- разрещаем изменения
@@ -80,7 +80,7 @@ create or replace package body client_data_api_pack is
       raise;
   end;
 
-  procedure delete_data(p_client_id        client.client_id%type
+  procedure delete_client_data(p_client_id        client.client_id%type
                        ,p_delete_field_ids t_number_array) is
   begin
     allow_changes(); -- разрещаем изменения

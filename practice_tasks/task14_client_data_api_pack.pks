@@ -13,11 +13,11 @@ create or replace package client_data_api_pack is
   */
 
   -- Добавление/изменение клиентских данных
-  procedure insert_or_update_data(p_client_id   client.client_id%type
+  procedure insert_or_update_client_data(p_client_id   client.client_id%type
                                  ,p_client_data t_client_data_array);
 
   -- Удаление клиентских данных
-  procedure delete_data(p_client_id        client.client_id%type
+  procedure delete_client_data(p_client_id        client.client_id%type
                        ,p_delete_field_ids t_number_array);
 
   -- Проверка происходит ли изменение через API (вызыывается в триггере)

@@ -13,12 +13,12 @@
 -- 1. Спецификация (определение):
 create or replace package my_pack is
 
-    -- Определение констант
-    c_usd_code constant char(3 char) := 'USD';
+  -- Определение констант
+  c_usd_code constant char(3 char) := 'USD';
 	c_rub_code constant char(3 char) := 'RUR';
 
-    -- Процедура проверки значения на предмет валютного кода (определение)
-    procedure check_currency_code(pi_value char);
+  -- Процедура проверки значения на предмет валютного кода (определение)
+  procedure check_currency_code(pi_value char);
 
 end;
 /
@@ -54,8 +54,8 @@ end;
 -- 1. Спецификация (определение):
 create or replace package my2_pack is
 
-    -- Определение констант
-    c_usd_code constant char(3 char) := 'USD';
+  -- Определение констант
+  c_usd_code constant char(3 char) := 'USD';
 	c_rub_code constant char(3 char) := 'RUR';
 
 end;
