@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 19. Использование триггеров
+  Лекция 20. Использование триггеров
   
   Описание скрипта: управление тех полями
 

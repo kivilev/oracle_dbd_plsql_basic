@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 18. Триггеры
+  Лекция 19. Триггеры
 	
   Описание скрипта: FOLLOWS - порядок следования
 */

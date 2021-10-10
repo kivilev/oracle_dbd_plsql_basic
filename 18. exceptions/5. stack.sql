@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 20. Исключения
+  Лекция 18. Исключения
 	
   Описание скрипта: демонстрация стэка вызова
 */

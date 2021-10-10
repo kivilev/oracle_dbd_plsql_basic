@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 18. Триггеры
+  Лекция 19. Триггеры
 	
   Описание скрипта: примеры составных триггеров
 */
@@ -24,14 +24,14 @@ compound trigger -- составной
 
   -- до операции
   before statement is begin
-    dbms_output.put_line('--- before statement');    
+    dbms_output.put_line('=== before statement');    
     g_user := sys_context('userenv','os_user'); -- один раз получаем имя OS юзера
     dbms_output.put_line('Получили OS user: '|| g_user); 
   end before statement;
 
   -- до операции построчно
   before each row is begin
-    dbms_output.put_line(chr(9)||'-- before row. Операцию выполняет: '||g_user);
+    dbms_output.put_line(chr(9)||'== before row. Операцию выполняет: '||g_user);
   end before each row;  
 
   -- после операции построчно
@@ -41,7 +41,7 @@ compound trigger -- составной
 
   -- после операции
   after statement is begin
-    dbms_output.put_line('--- after statement'); 
+    dbms_output.put_line('=== after statement'); 
   end after statement;
 
 end;

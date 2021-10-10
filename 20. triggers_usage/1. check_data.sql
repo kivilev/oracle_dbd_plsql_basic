@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 19. Использование триггеров
+  Лекция 20. Использование триггеров
   
   Описание скрипта: проверка данных
 
@@ -33,11 +33,10 @@ create or replace package body validation_pack is
                          '. p_field_value: ' || p_field_value);
   
     -- Проверка поля "IP"
-    if p_field_id = 2
-       and
-       (length(p_field_value) < 7 or length(p_field_value) > 15 or regexp_count(p_field_value, '\.') != 3) then
+    if p_field_id = 2 and
+      (length(p_field_value) < 7 or length(p_field_value) > 15 or regexp_count(p_field_value, '\.') != 3) then
     
-      dbms_output.put_line('Значение "'|| p_field_value ||'" в поле "IP" невалидно');
+      raise_application_error(-20102, 'Значение "'|| p_field_value ||'" в поле "IP" невалидно');
       -- возбуждение исключения
     end if;
   

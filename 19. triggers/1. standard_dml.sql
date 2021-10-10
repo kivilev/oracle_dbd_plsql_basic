@@ -2,7 +2,7 @@
   Курс: PL/SQL.Basic
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
-  Лекция 18. Триггеры
+  Лекция 19. Триггеры
 	
   Описание скрипта: примеры обычных DML-триггеров
 */
@@ -49,12 +49,12 @@ select level, 'name'||level from dual connect by level <= 5;
 
 
 ---- Пример 3. Обычный BEFORE-триггер на операцию DELETE в целом.
--- запрещает удалять записи
 create or replace trigger my_tab_b_d_stmt
 before -- до
 delete -- удаление
 on my_tab -- на таблице my_tab
 begin
+  --dbms_output.put_line('Удалять нельзя!');
   raise_application_error(-20101, 'Удалять нельзя!'); -- это пользовательское исключение
 end;
 /
