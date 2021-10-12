@@ -214,7 +214,7 @@ begin
     dbms_output.put_line('ID объекта не может быть пустым');
   end if;
 
-  if v_delete_field_ids is empty then
+  if p_delete_field_ids is null or p_delete_field_ids is empty then
     dbms_output.put_line('Коллекция не содержит данных');
   end if;
 

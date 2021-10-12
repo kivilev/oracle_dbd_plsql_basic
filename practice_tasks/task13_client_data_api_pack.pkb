@@ -66,7 +66,7 @@ create or replace package body client_data_api_pack is
       dbms_output.put_line(c_error_msg_empty_object_id);
     end if;
   
-    if p_delete_field_ids is empty then
+    if p_delete_field_ids is null or p_delete_field_ids is empty then
       dbms_output.put_line(c_error_msg_empty_collection);
     end if;
   
