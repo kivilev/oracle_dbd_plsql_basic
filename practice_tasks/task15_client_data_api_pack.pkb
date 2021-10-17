@@ -1,6 +1,17 @@
 create or replace package body client_data_api_pack is
 
-  -- Вставка/обновление клиентских данных
+  g_is_api boolean := false; -- признак выполняется ли изменения через API
+
+  procedure set_api_flag is
+  begin
+    g_is_api := true;
+  end;
+
+  procedure reset_api_flag is
+  begin
+    g_is_api := false;
+  end;
+  
   procedure insert_or_update_client_data(p_client_id   client.client_id%type
                                         ,p_client_data t_client_data_array) is
     v_message       varchar2(200 char) := 'Клиентские данные вставлены или обновлены по списку id_поля/значение';
@@ -32,7 +43,8 @@ create or replace package body client_data_api_pack is
     dbms_output.put_line(v_message || '. ID: ' || p_client_id);
     dbms_output.put_line(to_char(v_current_dtime,
                                  '"date:"yyyymmdd" time:"hh24:mi'));
-  
+
+    set_api_flag();
     -- вставка/обновление данных
     merge into client_data o
     using (select p_client_id client_id
@@ -52,7 +64,14 @@ create or replace package body client_data_api_pack is
         ,n.field_id
         ,n.field_value);
   
+    reset_api_flag();
+  
+  exception
+    when others then
+      reset_api_flag();
+      raise;
   end;
+
 
 
   -- Удаление клиентских данных
@@ -79,6 +98,20 @@ create or replace package body client_data_api_pack is
      where cd.client_id = p_client_id
        and cd.field_id in
            (select value(t) from table(p_delete_field_ids) t);
+    reset_api_flag();
+  
+  exception
+    when others then
+      reset_api_flag();
+      raise;
+  end;
+
+  
+  procedure is_changes_through_api is
+  begin
+    if not g_is_api then
+      raise_application_error(c_error_code_manual_changes, c_error_msg_manual_changes);
+    end if;
   end;
 
 end;

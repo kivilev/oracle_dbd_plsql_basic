@@ -7,9 +7,22 @@ declare
                                                              t_client_data(2, '+7999000000'),
                                                              t_client_data(3, '1000000000'));
   v_client_id client.client_id%type;                                                             
+  v_create_dtime_tech client.create_dtime_tech%type;
+  v_update_dtime_tech client.update_dtime_tech%type;  
 begin
   v_client_id := client_api_pack.create_client(p_client_data => v_client_data);  
   dbms_output.put_line('Client id: '|| v_client_id);
+  
+  select cl.create_dtime_tech, cl.update_dtime_tech
+    into v_create_dtime_tech, v_update_dtime_tech
+    from client cl 
+   where cl.client_id = v_client_id;
+  
+  -- проверка работы триггера
+  if v_create_dtime_tech != v_update_dtime_tech then
+    raise_application_error(-20998, 'Технические даты разные!');
+  end if;
+  
   commit;
 end;
 /
@@ -22,8 +35,20 @@ select * from client_data cl where cl.client_id = 41 order by cl.field_id;
 declare
   v_client_id client.client_id%type := 41;
   v_reason client.blocked_reason%type := 'Тестовая блокировка клиента';
+  v_create_dtime_tech client.create_dtime_tech%type;
+  v_update_dtime_tech client.update_dtime_tech%type;    
 begin
   client_api_pack.block_client(p_client_id => v_client_id, p_reason => v_reason);
+  
+  select cl.create_dtime_tech, cl.update_dtime_tech
+    into v_create_dtime_tech, v_update_dtime_tech
+    from client cl 
+   where cl.client_id = v_client_id;
+  
+  -- проверка работы триггера
+  if v_create_dtime_tech = v_update_dtime_tech then
+    raise_application_error(-20998, 'Технические даты одинаковые!');
+  end if;
   
 end;
 /
@@ -91,6 +116,8 @@ select cd.*
   join client_data_field f on f.field_id = cd.field_id
  where cd.client_id = 41  -- какой-то клиент
  order by cd.field_id;
+
+
 
 
 ---- Негативные тесты
@@ -175,5 +202,84 @@ begin
 exception
   when client_api_pack.e_invalid_input_parameter then
     dbms_output.put_line('Удаление клиентских данных. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+---- Негативные тесты (триггеры)
+
+-- Удаление строки
+begin
+  delete client cl     
+   where cl.client_id = -1;
+
+  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');  	
+exception
+  when client_api_pack.e_delete_forbidden then
+    dbms_output.put_line('Удаление объекта. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+-- Вставка не через API (вставка) - клиент
+begin
+  insert into client
+    (client_id
+    ,is_active
+    ,is_blocked
+    ,blocked_reason)
+  values
+    (-1
+    ,client_api_pack.c_active
+    ,client_api_pack.c_not_blocked
+    ,null);
+ 
+  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');
+exception
+  when client_api_pack.e_manual_changes then
+    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+-- Изменение не через API (обновление) - клиент
+begin
+  update client cl
+     set cl.is_blocked     = client_api_pack.c_blocked
+        ,cl.blocked_reason = 'blocked_reason'
+   where cl.client_id = -1
+     and cl.is_active = client_api_pack.c_active;
+  
+	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');		 
+exception
+  when client_api_pack.e_manual_changes then
+    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+-- Вставка не через API (вставка) - клиентских данных
+begin
+  insert into client_data(client_id,
+                          field_id,
+                          field_value)
+  values
+    (-1
+    ,-1
+    ,null);
+  
+	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');		
+exception
+  when client_api_pack.e_manual_changes then
+    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+-- Изменение не через API (обновление) - клиентских данных
+begin
+  update client_data cl
+     set cl.field_value = cl.field_value
+   where cl.client_id = -1;
+  
+	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');	 
+exception
+  when client_api_pack.e_manual_changes then
+    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
