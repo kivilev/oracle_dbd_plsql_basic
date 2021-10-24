@@ -6,8 +6,15 @@
   
   Описание скрипта: управление тех полями
 
+  delete from client_data t where t.client_id = 555;
+  delete from payment_detail t
+   where t.payment_id in (select t.payment_id
+                            from payment t
+                           where t.from_client_id = 555
+                              or t.to_client_id = 555);
+  delete from payment t where t.from_client_id = 555 or t.to_client_id = 555;
   delete from client t where t.client_id = 555;
-  commit;
+  delete from client_aud;
 */
 
 --- Триггер, который изменяет технические поля

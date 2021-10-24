@@ -18,7 +18,7 @@ begin
 end;
 /
 
----- Пример 2. Параметризированный запрос
+---- Пример 2. Курсор с параметром
 declare
   -- процедура печати
   procedure print(pi_employee_id employees.employee_id%type)

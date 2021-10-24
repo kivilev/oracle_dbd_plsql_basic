@@ -4,12 +4,20 @@
 
   Лекция 20. Использование триггеров
   
-  Описание скрипта: проверка данных
+  Описание скрипта: аудит изменения данных
 
+  delete from client_data t where t.client_id = 555;
+  delete from payment_detail t
+   where t.payment_id in (select t.payment_id
+                            from payment t
+                           where t.from_client_id = 555
+                              or t.to_client_id = 555);
+  delete from payment t where t.from_client_id = 555 or t.to_client_id = 555;
   delete from client t where t.client_id = 555;
   delete from client_aud;
-  commit;
+  drop table client_aud;
 */
+
 ---- Создадим таблицу аудита для клиента
 create table client_aud (
   -- поля для аудита (их может быть гораздо больше)
@@ -29,7 +37,7 @@ create table client_aud (
 alter table client_aud add constraint client_aud_chk check (operation_type in ('I', 'U', 'D'));
 
 
---- Триггер, который логируем измененные значения
+--- Триггер, который логирует измененные значения
 create or replace trigger client_a_iud_audit
 after -- после
 insert or update or delete
