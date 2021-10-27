@@ -18,8 +18,8 @@ create or replace package client_api_pack is
   c_error_msg_empty_collection  constant varchar2(100 char) := 'Коллекция не содержит данных';
   c_error_msg_empty_object_id   constant varchar2(100 char) := 'ID объекта не может быть пустым';
   c_error_msg_empty_reason      constant varchar2(100 char) := 'Причина не может быть пустой';
-  c_error_msg_manual_changes    constant varchar2(100 char) := 'Изменения должны выполняться только через API';
   c_error_msg_delete_forbidden  constant varchar2(100 char) := 'Удаление объекта запрещено';
+  c_error_msg_manual_changes    constant varchar2(100 char) := 'Изменения должны выполняться только через API';
 
   -- Коды ошибок
   c_error_code_invalid_input_parameter constant number(10) := -20101;

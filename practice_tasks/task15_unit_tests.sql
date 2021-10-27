@@ -207,79 +207,82 @@ end;
 
 ---- Негативные тесты (триггеры)
 
--- Удаление строки
+-- Проверка запрета удаления клиента через delete
+declare
+  v_client_id   client.client_id%type := -1;
 begin
-  delete client cl     
-   where cl.client_id = -1;
+  delete from client cl where cl.client_id = v_client_id;
 
-  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');  	
+  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');  
 exception
   when client_api_pack.e_delete_forbidden then
-    dbms_output.put_line('Удаление объекта. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+    dbms_output.put_line('Удаление клиента. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
 
--- Вставка не через API (вставка) - клиент
+-- Проверка запрета вставки в client не через API
+declare
+  v_client_id   client.client_id%type := -1;
 begin
-  insert into client
-    (client_id
-    ,is_active
-    ,is_blocked
-    ,blocked_reason)
-  values
-    (-1
-    ,client_api_pack.c_active
-    ,client_api_pack.c_not_blocked
-    ,null);
- 
-  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');
+  insert into client(client_id,
+                     is_active,
+                     is_blocked,
+                     blocked_reason)
+  values (v_client_id, client_api_pack.c_active, client_api_pack.c_not_blocked, null);
+
+  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');  
 exception
   when client_api_pack.e_manual_changes then
-    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+    dbms_output.put_line('Вставка в таблицу client не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
 
--- Изменение не через API (обновление) - клиент
+-- Проверка запрета обновления в client не через API
+declare
+  v_client_id   client.client_id%type := -1;
 begin
   update client cl
-     set cl.is_blocked     = client_api_pack.c_blocked
-        ,cl.blocked_reason = 'blocked_reason'
-   where cl.client_id = -1
-     and cl.is_active = client_api_pack.c_active;
-  
-	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');		 
+     set cl.is_active = cl.is_active
+   where cl.client_id = v_client_id;
+
+  raise_application_error(-20999, 'Unit-тест или API выполнены не верно');  
 exception
   when client_api_pack.e_manual_changes then
-    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+    dbms_output.put_line('Обновление таблицы client не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
 
 -- Вставка не через API (вставка) - клиентских данных
+declare
+  v_client_id   client.client_id%type := -1;
+  v_field_id    client_data.field_id%type := -1;
 begin
   insert into client_data(client_id,
                           field_id,
                           field_value)
   values
-    (-1
-    ,-1
+    (v_client_id
+    ,v_field_id
     ,null);
   
 	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');		
 exception
-  when client_api_pack.e_manual_changes then
+  when client_data_api_pack.e_manual_changes then
     dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
 
 -- Изменение не через API (обновление) - клиентских данных
+declare
+  v_client_id   client.client_id%type := -1;
 begin
   update client_data cl
      set cl.field_value = cl.field_value
-   where cl.client_id = -1;
+   where cl.client_id = v_client_id;
   
 	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');	 
 exception
-  when client_api_pack.e_manual_changes then
+  when client_data_api_pack.e_manual_changes then
     dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
