@@ -14,13 +14,13 @@ create or replace package client_data_api_pack is
 
   -- Коды ошибок
   c_error_code_invalid_input_parameter constant number(10) := -20101;
-  c_error_code_manual_changes          constant number(10) := -20102;
+  c_error_code_manual_changes          constant number(10) := -20103;
 
   -- Объекты ошибок
   e_invalid_input_parameter exception;
   pragma exception_init(e_invalid_input_parameter, -20101);
   e_manual_changes exception;
-  pragma exception_init(e_manual_changes, -20102);
+  pragma exception_init(e_manual_changes, -20103);
     
   -- Вставка/обновление клиентских данных
   procedure insert_or_update_client_data(p_client_id   client.client_id%type
