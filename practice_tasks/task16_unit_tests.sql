@@ -319,16 +319,4 @@ exception
 end;
 /
 
--- Негативный тест на отсутствие объекта
-declare
-  v_client_id client.client_id%type := -777;
-  v_reason    client.blocked_reason%type := 'Тестовая причина';
-begin
-  client_api_pack.block_client(p_client_id => v_client_id, p_reason => v_reason);
-  
-	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');	 
-exception
-  when common_pack.e_object_notfound then
-    dbms_output.put_line('Объект не найден. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
-end;
-/
+
