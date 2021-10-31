@@ -125,6 +125,13 @@ begin
   common_pack.enable_manual_changes();
       
   delete from client cl where cl.client_id = v_client_id;
+  
+  common_pack.disable_manual_changes();
+  
+exception
+  when others then
+    common_pack.disable_manual_changes();
+    raise;    
 end;
 /
 
@@ -137,6 +144,13 @@ begin
   update client cl
      set cl.is_active = cl.is_active
    where cl.client_id = v_client_id;
+  
+  common_pack.disable_manual_changes();
+  
+exception
+  when others then
+    common_pack.disable_manual_changes();
+    raise;    
 end;
 /
 
@@ -149,6 +163,13 @@ begin
   update client_data cl
      set cl.field_value = cl.field_value
    where cl.client_id = v_client_id;
+  
+  common_pack.disable_manual_changes();
+  
+exception
+  when others then
+    common_pack.disable_manual_changes();
+    raise;
 end;
 /
 
@@ -318,5 +339,3 @@ exception
     dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
-
-
