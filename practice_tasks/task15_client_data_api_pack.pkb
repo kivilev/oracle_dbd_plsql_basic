@@ -18,8 +18,8 @@ create or replace package body client_data_api_pack is
     v_current_dtime date := sysdate;
   begin
     if p_client_id is null then
-			raise_application_error(common_pack.c_error_code_invalid_input_parameter,
-												common_pack.c_error_msg_empty_object_id);
+			raise_application_error(c_error_code_invalid_input_parameter,
+												c_error_msg_empty_object_id);
     end if;
    
     if p_client_data is not empty then
