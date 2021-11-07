@@ -43,7 +43,16 @@ create or replace package body ut_common_pack is
     return client_api_pack.create_client(p_client_data => v_client_data);
   end;
 
-  -- Получить данные по полю клиента
+  function get_client_info(p_client_id client_data.client_id%type)
+    return client%rowtype is
+    v_client client%rowtype;
+  begin
+    select * into v_client 
+		  from client c 
+		 where c.client_id = p_client_id;
+    return v_client;
+  end;
+  
   function get_client_field_value(p_client_id client_data.client_id%type
                                  ,p_field_id  client_data.field_id%type)
     return client_data.field_value%type is
@@ -64,13 +73,6 @@ create or replace package body ut_common_pack is
                             c_error_msg_test_failed);
   end;
 
-  function get_client_info(p_client_id client_data.client_id%type)
-    return client%rowtype is
-    v_client client%rowtype;
-  begin
-    select * into v_client from client c where c.client_id = p_client_id;
-    return v_client;
-  end;
 
 end;
 /

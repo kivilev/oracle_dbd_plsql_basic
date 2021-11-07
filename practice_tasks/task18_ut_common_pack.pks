@@ -11,7 +11,7 @@ create or replace package ut_common_pack is
   c_non_existing_client_id constant client.client_id%type := -777;
 
   -- Сообщения об ошибках
-  c_error_msg_test_failed constant varchar2(100 char) := 'Unit-тест или API выполнены не верно';
+  c_error_msg_test_failed constant varchar2(100 char) := 'Unit-тест не прошел';
 
   -- Коды ошибок
   c_error_code_test_failed constant number(10) := -20999;
@@ -35,7 +35,7 @@ create or replace package ut_common_pack is
                                  ,p_field_id  client_data.field_id%type)
     return client_data.field_value%type;
 
-  -- возбуждение исключения о неверном тесте
+  -- Возбуждение исключения о неверном тесте
   procedure ut_failed;
 
 end;

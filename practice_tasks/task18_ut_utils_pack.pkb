@@ -31,7 +31,7 @@ create or replace package body ut_utils_pack is
                     and s.type = s2.type
                     and s.line + 1 = s2.line
                     and s2.type = 'PACKAGE'
-                  where s.text like '%--%test%'
+                  where s.text like '%--%test(%'
                     and s.type = 'PACKAGE'
                     and upper(s.name) = upper(p.package_name)
                   order by s2.line) loop
