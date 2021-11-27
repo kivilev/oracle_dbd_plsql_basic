@@ -103,7 +103,7 @@ comment on column currency.description is 'Описание валюты';
 alter table currency add constraint currency_pk primary key (currency_id);
 alter table currency add constraint currency_alfa3_chk check (alfa3 = upper(alfa3));
 
-insert into currency values(634, 'RUB', 'Российский рубль');
+insert into currency values(643, 'RUB', 'Российский рубль');
 insert into currency values(840, 'USD', 'Доллар США');
 insert into currency values(978 , 'EUR', 'Евро');
 commit;
