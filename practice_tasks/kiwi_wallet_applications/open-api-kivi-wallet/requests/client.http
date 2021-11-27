@@ -1,0 +1,41 @@
+### Регистрация Володи Яковлева в Киви-кошельке (создание клиента через client_api_pack.create_client)
+POST http://localhost:8080/api/v1/clients
+Content-Type: application/json
+
+{
+  "email": "milicioner77@gmail.com",
+  "birthDay": "1977-03-06",
+  "mobilePhone": "+79999137800",
+  "lastName": "Яковлев",
+  "firstName": "Владимир",
+  "inn": "1234567890"
+}
+
+
+### Володя тупанул и решил поменять email (изменение данных клиента - client_data_api_pack.insert_or_update_client_data)
+PUT http://localhost:8080/api/v1/clients/361
+Content-Type: application/json
+
+{
+  "email": "volodya.ne.vinoven@gmail.com"
+}
+
+
+### Зашел в личный кабинет посмотреть свои данные (информация по клиенту - select * from client)
+GET http://localhost:8080/api/v1/clients/361
+
+
+
+### Регистрация Гриши Измайлова (создание клиента через client_api_pack.create_client)
+POST http://localhost:8080/api/v1/clients
+Content-Type: application/json
+
+{
+  "email": "izmaylov@mail.ru",
+  "birthDay": "1985-02-01",
+  "mobilePhone": "+79999130000",
+  "lastName": "Измайлов",
+  "firstName": "Григорий",
+  "inn": "098765432111"
+}
+

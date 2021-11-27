@@ -1,0 +1,7 @@
+oracle:
+    datasource:
+        extensions:
+            initSql: alter session set current_schema=kivi_core
+        jdbcUrl: jdbc:oracle:thin:@ldap://oraldap.osmp.ru:389/studydb,cn=OracleContext,dc=osmp,dc=ru
+        username: kivi_core
+        password: booble12
