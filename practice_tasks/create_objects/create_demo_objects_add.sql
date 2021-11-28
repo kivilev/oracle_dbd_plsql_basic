@@ -1,19 +1,19 @@
 /*
-  Курс: PL/SQL.Basic
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  РљСѓСЂСЃ: PL/SQL.Basic
+  РђРІС‚РѕСЂ: РљРёРІРёР»РµРІ Р”.РЎ. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
   
-  Описание скрипта: создание объектов, необходимых для выполнения ДОПОЛНИТЕЛЬНОЙ практической работы
+  РћРїРёСЃР°РЅРёРµ СЃРєСЂРёРїС‚Р°: СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚РѕРІ, РЅРµРѕР±С…РѕРґРёРјС‹С… РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р”РћРџРћР›РќРРўР•Р›Р¬РќРћР™ РїСЂР°РєС‚РёС‡РµСЃРєРѕР№ СЂР°Р±РѕС‚С‹
 */
 
--- удаление сущностей, если выполняете первый раз, будут ошибки удаления
--- ничего страшного у вас пока этих объектов нет.
+-- СѓРґР°Р»РµРЅРёРµ СЃСѓС‰РЅРѕСЃС‚РµР№, РµСЃР»Рё РІС‹РїРѕР»РЅСЏРµС‚Рµ РїРµСЂРІС‹Р№ СЂР°Р·, Р±СѓРґСѓС‚ РѕС€РёР±РєРё СѓРґР°Р»РµРЅРёСЏ
+-- РЅРёС‡РµРіРѕ СЃС‚СЂР°С€РЅРѕРіРѕ Сѓ РІР°СЃ РїРѕРєР° СЌС‚РёС… РѕР±СЉРµРєС‚РѕРІ РЅРµС‚.
 drop table account;
 drop table wallet;
 drop sequence wallet_seq;
 drop sequence account_seq;
 
 
---------- Создание сущности "Кошелек" ----------------
+--------- РЎРѕР·РґР°РЅРёРµ СЃСѓС‰РЅРѕСЃС‚Рё "РљРѕС€РµР»РµРє" ----------------
 create table wallet
 (
   wallet_id                 number(30) not null,
@@ -25,14 +25,14 @@ create table wallet
 );
 
 -- add comments to the table 
-comment on table wallet is 'Кошелек';
+comment on table wallet is 'РљРѕС€РµР»РµРє';
 -- add comments to the columns 
-comment on column wallet.wallet_id is 'Уникальный ID кошелька';
-comment on column wallet.client_id is 'Уникальный ID клиента';
-comment on column wallet.status_id is 'Статус кошелька. 0 - транзакции разрешены, 1 - транзакции заблокированы';
-comment on column wallet.last_status_change_reason is 'Последняя причина изменения статуса';
-comment on column wallet.create_dtime is 'Техническое поле. Дата создания записи';
-comment on column wallet.update_dtime is 'Техническое поле. Дата обновления записи';
+comment on column wallet.wallet_id is 'РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID РєРѕС€РµР»СЊРєР°';
+comment on column wallet.client_id is 'РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID РєР»РёРµРЅС‚Р°';
+comment on column wallet.status_id is 'РЎС‚Р°С‚СѓСЃ РєРѕС€РµР»СЊРєР°. 0 - С‚СЂР°РЅР·Р°РєС†РёРё СЂР°Р·СЂРµС€РµРЅС‹, 1 - С‚СЂР°РЅР·Р°РєС†РёРё Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅС‹';
+comment on column wallet.last_status_change_reason is 'РџРѕСЃР»РµРґРЅСЏСЏ РїСЂРёС‡РёРЅР° РёР·РјРµРЅРµРЅРёСЏ СЃС‚Р°С‚СѓСЃР°';
+comment on column wallet.create_dtime is 'РўРµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ. Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р·Р°РїРёСЃРё';
+comment on column wallet.update_dtime is 'РўРµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ. Р”Р°С‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РїРёСЃРё';
 
 -- create/recreate primary, unique and foreign key constraints 
 alter table wallet add constraint wallet_pk primary key (wallet_id);
@@ -43,7 +43,7 @@ alter table wallet add constraint wallet_status_id_chk check (status_id in (0, 1
 alter table wallet add constraint wallet_status_reason_chk check (status_id = 1 and last_status_change_reason is not null);
 
 
---------- Создание сущности "Счет" ----------------------
+--------- РЎРѕР·РґР°РЅРёРµ СЃСѓС‰РЅРѕСЃС‚Рё "РЎС‡РµС‚" ----------------------
 create table account
 (
   account_id   number(38) not null,
@@ -55,14 +55,14 @@ create table account
 );
 
 -- add comments to the table 
-comment on table account is 'Счет кошелька';
+comment on table account is 'РЎС‡РµС‚ РєРѕС€РµР»СЊРєР°';
 -- add comments to the columns 
-comment on column account.account_id is 'Уникальный ID счета';
-comment on column account.wallet_id is 'Уникальный ID кошелька';
-comment on column account.currency_id is 'Валюта счета. 840 - USD, 643 - RUB, 978 - EUR'; -- Да, хорошо бы справочник, но ты уже прости въедливый студент :)
-comment on column account.balance is 'Текущий баланс счета';
-comment on column account.create_dtime is 'Техническое поле. Дата создания записи';
-comment on column account.update_dtime is 'Техническое поле. Дата обновления записи';
+comment on column account.account_id is 'РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID СЃС‡РµС‚Р°';
+comment on column account.wallet_id is 'РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID РєРѕС€РµР»СЊРєР°';
+comment on column account.currency_id is 'Р’Р°Р»СЋС‚Р° СЃС‡РµС‚Р°. 840 - USD, 643 - RUB, 978 - EUR'; -- Р”Р°, С…РѕСЂРѕС€Рѕ Р±С‹ СЃРїСЂР°РІРѕС‡РЅРёРє, РЅРѕ С‚С‹ СѓР¶Рµ РїСЂРѕСЃС‚Рё РІСЉРµРґР»РёРІС‹Р№ СЃС‚СѓРґРµРЅС‚ :)
+comment on column account.balance is 'РўРµРєСѓС‰РёР№ Р±Р°Р»Р°РЅСЃ СЃС‡РµС‚Р°';
+comment on column account.create_dtime is 'РўРµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ. Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р·Р°РїРёСЃРё';
+comment on column account.update_dtime is 'РўРµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ. Р”Р°С‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РїРёСЃРё';
 -- create/recreate indexes 
 create unique index account_wallet_currency_unq on account (wallet_id, currency_id);
 
@@ -72,7 +72,7 @@ alter table account add constraint account_wallet_fk foreign key (wallet_id) ref
 -- create/recreate check constraints 
 alter table account add constraint account_currency_id_fk foreign key (currency_id) references currency (currency_id);
 
---------- Последовательности ----------------------
+--------- РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё ----------------------
 create sequence wallet_seq;
 create sequence account_seq;
 
