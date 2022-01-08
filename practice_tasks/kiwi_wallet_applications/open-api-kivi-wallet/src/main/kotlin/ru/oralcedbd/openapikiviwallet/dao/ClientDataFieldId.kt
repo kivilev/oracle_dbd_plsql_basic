@@ -1,6 +1,6 @@
 package ru.oralcedbd.openapikiviwallet.dao
 
-enum class ClientDataFieldId(val id: Long) {
+enum class ClientDataFieldId(val id: Long) : FieldId {
     EMAIL(1),
     MOBILE_PHONE(2),
     INN(3),

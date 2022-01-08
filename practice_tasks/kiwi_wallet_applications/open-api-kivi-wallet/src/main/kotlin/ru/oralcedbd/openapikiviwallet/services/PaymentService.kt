@@ -11,6 +11,8 @@ import ru.oralcedbd.openapikiviwallet.dao.PaymentDao
 import ru.oralcedbd.openapikiviwallet.dao.PaymentDetailFieldId
 import ru.oralcedbd.openapikiviwallet.model.Payment
 import ru.oralcedbd.openapikiviwallet.model.PaymentStatus
+import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.getIfNotEmpty
+import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.putIfExists
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -88,16 +90,4 @@ class PaymentServiceImpl(private val paymentDao: PaymentDao) : PaymentService {
         }
         return paymentDetailResponseDto
     }
-
-    private fun putIfExists(
-        map: MutableMap<PaymentDetailFieldId, String>,
-        fieldId: PaymentDetailFieldId,
-        value: String?
-    ) {
-        if (!value.isNullOrBlank())
-            map[fieldId] = value
-    }
-
-    private fun getIfNotEmpty(fieldId: PaymentDetailFieldId, map: Map<PaymentDetailFieldId, String>) =
-        map.getOrDefault(fieldId, "")
 }

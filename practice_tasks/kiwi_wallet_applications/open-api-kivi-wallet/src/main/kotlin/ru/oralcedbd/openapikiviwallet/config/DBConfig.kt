@@ -42,7 +42,7 @@ class DBConfig {
             dataSource.minPoolSize = 5
             dataSource.acquireIncrement = 10
             dataSource.maxPoolSize = 5
-            dataSource.maxIdleTime = 1
+            dataSource.maxIdleTime = 300
             //dataSource.
         } catch (e: PropertyVetoException) {
             e.printStackTrace()

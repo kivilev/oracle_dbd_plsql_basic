@@ -9,6 +9,8 @@ import ru.oralcedbd.openapikiviwallet.dao.ClientDao
 import ru.oralcedbd.openapikiviwallet.dao.ClientDataFieldId
 import ru.oralcedbd.openapikiviwallet.model.Client
 import ru.oralcedbd.openapikiviwallet.model.Currency
+import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.getIfNotEmpty
+import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.putIfExists
 import java.util.*
 
 interface ClientService {
@@ -22,7 +24,9 @@ class ClientServiceImpl(private val clientDao: ClientDao, private val walletServ
 
     override fun createClient(clientDataRequestDto: ClientDataRequestDto): ClientIdResponseDto {
         val clientId = clientDao.createClient(mapDtoToClientData(clientDataRequestDto))
+
         walletService.createWalletWithAccount(clientId, Currency.RUB, 0F)
+
         return ClientIdResponseDto(clientId)
     }
 
@@ -76,13 +80,5 @@ class ClientServiceImpl(private val clientDao: ClientDao, private val walletServ
         putIfExists(clientData, ClientDataFieldId.BIRTHDAY, clientDataRequestDto.birthDay)
         return clientData
     }
-
-    private fun putIfExists(map: MutableMap<ClientDataFieldId, String>, fieldId: ClientDataFieldId, value: String?) {
-        if (!value.isNullOrBlank())
-            map[fieldId] = value
-    }
-
-    private fun getIfNotEmpty(fieldId: ClientDataFieldId, map: Map<ClientDataFieldId, String>) =
-        map.getOrDefault(fieldId, "")
 
 }
