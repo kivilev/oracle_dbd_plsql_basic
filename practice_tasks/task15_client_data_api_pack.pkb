@@ -94,6 +94,8 @@ create or replace package body client_data_api_pack is
     dbms_output.put_line(to_char(v_current_dtime, 'ff4'));
     dbms_output.put_line('Количество удаляемых полей: ' ||
                          p_delete_field_ids.count());
+	
+	allow_changes();
   
     delete client_data cd
      where cd.client_id = p_client_id

@@ -321,7 +321,7 @@ begin
 	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');		
 exception
   when common_pack.e_manual_changes then
-    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+    dbms_output.put_line('Вставка в таблицу client_data не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /
 
@@ -336,6 +336,20 @@ begin
 	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');	 
 exception
   when common_pack.e_manual_changes then
-    dbms_output.put_line('Выполнение не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+    dbms_output.put_line('Обновление таблицы client_data не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
+end;
+/
+
+-- Удаление не через API (обновление) - клиентских данных
+declare
+  v_client_id   client.client_id%type := -1;
+begin
+  delete client_data cl     
+   where cl.client_id = v_client_id;
+  
+	raise_application_error(-20999, 'Unit-тест или API выполнены не верно');	 
+exception
+  when common_pack.e_manual_changes then
+    dbms_output.put_line('Удаление из таблицы client_data не через API. Исключение возбуждено успешно. Ошибка: '|| sqlerrm); 
 end;
 /

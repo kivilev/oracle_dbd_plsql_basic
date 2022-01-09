@@ -82,7 +82,9 @@ create or replace package body client_data_api_pack is
       raise_application_error(common_pack.c_error_code_invalid_input_parameter,
                               common_pack.c_error_msg_empty_collection);
     end if;
-  
+	
+	allow_changes();
+	
     delete client_data cd
      where cd.client_id = p_client_id
        and cd.field_id in

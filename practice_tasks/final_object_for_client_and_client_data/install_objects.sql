@@ -25,7 +25,7 @@ prompt ==== Triggers...
 @@client_b_d_restrict.trg
 @@client_b_iu_api.trg
 @@client_b_iu_tech_fields.trg
-@@client_data_b_iu_api.trg
+@@client_data_b_iud_api.trg
 
 
 prompt ==== Ut objects...

@@ -88,6 +88,8 @@ create or replace package body client_data_api_pack is
 
     -- попытка заблокировать клиента (защита от параллельных изменений)
     client_api_pack.try_lock_client(p_client_id);
+	
+	allow_changes();
   
     delete client_data cd
      where cd.client_id = p_client_id
