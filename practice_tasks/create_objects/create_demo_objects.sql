@@ -8,11 +8,12 @@
 -- удаление сущностей, если выполняете первый раз, будут ошибки удаления, т.к. объектов еще нет
 drop table client_data;
 drop table client_data_field;
-drop table client;
 
 drop table payment_detail;
 drop table payment_detail_field;
 drop table payment;
+
+drop table client;
 drop table currency;
 
 drop sequence client_seq;
