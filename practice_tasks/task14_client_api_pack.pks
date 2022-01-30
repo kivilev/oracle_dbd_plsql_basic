@@ -23,7 +23,7 @@ create or replace package client_api_pack is
 
   -- Объекты ошибок
   e_invalid_input_parameter exception;
-  pragma exception_init(e_invalid_input_parameter, -20101);
+  pragma exception_init(e_invalid_input_parameter, c_error_code_invalid_input_parameter);
   
   ---- API
 

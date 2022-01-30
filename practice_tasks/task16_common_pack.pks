@@ -19,11 +19,11 @@ create or replace package common_pack is
    
   -- Объекты ошибок
   e_invalid_input_parameter exception;
-  pragma exception_init(e_invalid_input_parameter, -20101);
+  pragma exception_init(e_invalid_input_parameter, c_error_code_invalid_input_parameter);
   e_delete_forbidden exception;
-  pragma exception_init(e_delete_forbidden, -20102);
+  pragma exception_init(e_delete_forbidden, c_error_code_delete_forbidden);
   e_manual_changes exception;
-  pragma exception_init(e_manual_changes, -20103);
+  pragma exception_init(e_manual_changes, c_error_code_manual_changes);
   
   
   -- Включение/отключение разрешения менять данные в ручную  

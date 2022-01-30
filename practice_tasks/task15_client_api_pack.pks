@@ -24,15 +24,15 @@ create or replace package client_api_pack is
   -- Коды ошибок
   c_error_code_invalid_input_parameter constant number(10) := -20101;
   c_error_code_delete_forbidden        constant number(10) := -20102;
-	c_error_code_manual_changes          constant number(10) := -20103;
+  c_error_code_manual_changes          constant number(10) := -20103;
 
   -- Объекты ошибок
   e_invalid_input_parameter exception;
-  pragma exception_init(e_invalid_input_parameter, -20101);
+  pragma exception_init(e_invalid_input_parameter, c_error_code_invalid_input_parameter);
   e_delete_forbidden exception;
-  pragma exception_init(e_delete_forbidden, -20102);
+  pragma exception_init(e_delete_forbidden, c_error_code_delete_forbidden);
   e_manual_changes exception;
-  pragma exception_init(e_manual_changes, -20103);
+  pragma exception_init(e_manual_changes, c_error_code_manual_changes);
 
 
   ---- API

@@ -18,9 +18,9 @@ create or replace package client_data_api_pack is
 
   -- Объекты ошибок
   e_invalid_input_parameter exception;
-  pragma exception_init(e_invalid_input_parameter, -20101);
+  pragma exception_init(e_invalid_input_parameter, c_error_code_invalid_input_parameter);
   e_manual_changes exception;
-  pragma exception_init(e_manual_changes, -20103);
+  pragma exception_init(e_manual_changes, c_error_code_manual_changes);
     
   -- Вставка/обновление клиентских данных
   procedure insert_or_update_client_data(p_client_id   client.client_id%type
