@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import java.beans.PropertyVetoException
-import java.util.*
+import java.util.Properties
 import javax.sql.DataSource
 
 @Configuration
@@ -43,7 +43,6 @@ class DBConfig {
             dataSource.acquireIncrement = 10
             dataSource.maxPoolSize = 5
             dataSource.maxIdleTime = 300
-            //dataSource.
         } catch (e: PropertyVetoException) {
             e.printStackTrace()
         }

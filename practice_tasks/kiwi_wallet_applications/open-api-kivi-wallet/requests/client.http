@@ -13,7 +13,7 @@ Content-Type: application/json
 
 
 ### Володя тупанул и решил поменять email (изменение данных клиента - client_data_api_pack.insert_or_update_client_data)
-PUT http://localhost:8080/api/v1/clients/361
+PUT http://localhost:8080/api/v1/clients/1141
 Content-Type: application/json
 
 {
@@ -22,9 +22,9 @@ Content-Type: application/json
 
 
 ### Зашел в личный кабинет посмотреть свои данные (информация по клиенту - select * from client)
-GET http://localhost:8080/api/v1/clients/361
+GET http://localhost:8080/api/v1/clients/1142
 
-
+##### ПОПОЛИТЬ БАЛАНС
 
 ### Регистрация Гриши Измайлова (создание клиента через client_api_pack.create_client)
 POST http://localhost:8080/api/v1/clients

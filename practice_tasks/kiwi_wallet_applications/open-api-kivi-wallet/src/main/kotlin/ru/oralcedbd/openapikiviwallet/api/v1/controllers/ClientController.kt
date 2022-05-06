@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import ru.oralcedbd.openapikiviwallet.api.v1.controllers.RestErrors.ERROR_MESSAGE_CLIENT_NOT_FOUND
+import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientCreateResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientDataRequestDto
-import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientIdResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientResponseDto
-import ru.oralcedbd.openapikiviwallet.services.ClientService
+import ru.oralcedbd.openapikiviwallet.facade.ClientFacade
 
 
 @RestController
@@ -22,15 +22,15 @@ import ru.oralcedbd.openapikiviwallet.services.ClientService
     "/api/v1/clients",
     produces = [org.springframework.http.MediaType.APPLICATION_JSON_VALUE]
 )
-class ClientController(private val clientService: ClientService) {
+class ClientController(private val clientFacade: ClientFacade) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     fun createClient(
         @RequestBody
         body: ClientDataRequestDto
-    ): ClientIdResponseDto {
-        return clientService.createClient(body)
+    ): ClientCreateResponseDto {
+        return clientFacade.createClient(body)
     }
 
     @PutMapping("{id}")
@@ -41,13 +41,13 @@ class ClientController(private val clientService: ClientService) {
         @RequestBody
         body: ClientDataRequestDto
     ) {
-        clientService.changeClientData(id, body)
+        clientFacade.changeClientData(id, body)
     }
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     fun clientInfo(@PathVariable id: Long): ClientResponseDto {
-        val client = clientService.getClient(id)
+        val client = clientFacade.getClient(id)
         if (!client.isPresent) throw ResponseStatusException(HttpStatus.NOT_FOUND, ERROR_MESSAGE_CLIENT_NOT_FOUND)
         return client.get()
     }

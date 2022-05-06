@@ -11,17 +11,18 @@ import ru.oralcedbd.openapikiviwallet.dao.MapperUtils.convertClientDataFieldMapT
 import ru.oralcedbd.openapikiviwallet.dao.oratypes.OracleSqlStructArrayValue
 import ru.oralcedbd.openapikiviwallet.dao.oratypes.TClientData
 import ru.oralcedbd.openapikiviwallet.model.Client
+import ru.oralcedbd.openapikiviwallet.model.ClientData
 import ru.oralcedbd.openapikiviwallet.utils.EnumIdValueMap
 import java.sql.Types
-import java.util.*
+import java.util.Optional
 import javax.sql.DataSource
 
 
 interface ClientDao {
-    fun createClient(clientData: Map<ClientDataFieldId, String>): Long
+    fun createClient(clientData: ClientData): Long
     fun getClient(id: Long): Optional<Client>
-    fun getClientData(id: Long): Map<ClientDataFieldId, String>
-    fun changeClientData(id: Long, clientDataForUpsert: Map<ClientDataFieldId, String>)
+    fun getClientData(id: Long): ClientData
+    fun changeClientData(clientId: Long, clientData: ClientData)
 }
 
 @Repository
@@ -54,7 +55,7 @@ class ClientDaoImpl(dataSource: DataSource) : ClientDao {
             ).also(SimpleJdbcCall::compile)
     }
 
-    override fun createClient(clientData: Map<ClientDataFieldId, String>): Long {
+    override fun createClient(clientData: ClientData): Long {
 
         val clientDataList = convertClientDataFieldMapToList(clientData)
 
@@ -87,7 +88,7 @@ class ClientDaoImpl(dataSource: DataSource) : ClientDao {
         )
     }
 
-    override fun getClientData(id: Long): Map<ClientDataFieldId, String> {
+    override fun getClientData(id: Long): ClientData {
         return namedParameterJdbcTemplate.query(
             GET_CLIENT_DATA_SQL,
             mapOf("v_client_id" to id)
@@ -100,10 +101,10 @@ class ClientDaoImpl(dataSource: DataSource) : ClientDao {
 
     }
 
-    override fun changeClientData(id: Long, clientDataForUpsert: Map<ClientDataFieldId, String>) {
-        val clientDataList = convertClientDataFieldMapToList(clientDataForUpsert)
+    override fun changeClientData(clientId: Long, clientData: ClientData) {
+        val clientDataList = convertClientDataFieldMapToList(clientData)
         val params = mapOf(
-            "p_client_id" to id,
+            "p_client_id" to clientId,
             "p_client_data" to OracleSqlStructArrayValue<TClientData>(
                 clientDataList.toTypedArray(),
                 BeanPropertyStructMapper.newInstance(TClientData::class.java),
@@ -115,13 +116,16 @@ class ClientDaoImpl(dataSource: DataSource) : ClientDao {
     }
 
     private companion object {
-        const val GET_CLIENT_SQL = "select client_id, is_active, is_blocked, blocked_reason\n" +
-            "  from client\n" +
-            " where client_id = :v_client_id"
-        const val GET_CLIENT_DATA_SQL = "select t.field_id, t.field_value \n" +
-            "  from client_data t\n" +
-            " where t.client_id = :v_client_id"
+        const val GET_CLIENT_SQL = """
+            select client_id, is_active, is_blocked, blocked_reason
+              from client
+             where client_id = :v_client_id
+            """
+
+        const val GET_CLIENT_DATA_SQL = """
+           select t.field_id, t.field_value 
+              from client_data t
+             where t.client_id = :v_client_id            
+        """
     }
 }
-
-

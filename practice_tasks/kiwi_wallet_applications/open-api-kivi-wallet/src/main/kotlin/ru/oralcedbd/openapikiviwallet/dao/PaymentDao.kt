@@ -16,7 +16,7 @@ import ru.oralcedbd.openapikiviwallet.dao.oratypes.TPaymentDetail
 import ru.oralcedbd.openapikiviwallet.model.Payment
 import ru.oralcedbd.openapikiviwallet.utils.EnumIdValueMap
 import java.sql.Types
-import java.util.*
+import java.util.Optional
 import javax.sql.DataSource
 
 interface PaymentDao {
@@ -107,19 +107,23 @@ class PaymentDaoImpl(dataSource: DataSource) : PaymentDao {
     }
 
     private companion object {
-        const val GET_PAYMENT_SQL = "select payment_id,\n" +
-            "       create_dtime,\n" +
-            "       summa,\n" +
-            "       currency_id,\n" +
-            "       from_client_id,\n" +
-            "       to_client_id,\n" +
-            "       status,\n" +
-            "       status_change_reason\n" +
-            "  from payment\n" +
-            " where payment_id = :v_payment_id"
+        const val GET_PAYMENT_SQL = """
+            select payment_id,
+                   create_dtime,
+                   summa,
+                   currency_id,
+                   from_client_id,
+                   to_client_id,
+                   status,
+                   status_change_reason
+              from payment
+             where payment_id = :v_payment_id
+        """
 
-        const val GET_PAYMENT_DETAIL_SQL = "select field_id, field_value\n" +
-            "  from payment_detail\n" +
-            " where payment_id = :v_payment_id"
+        const val GET_PAYMENT_DETAIL_SQL = """
+            select field_id, field_value 
+              from payment_detail 
+             where payment_id = :v_payment_id
+        """
     }
 }
