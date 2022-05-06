@@ -31,10 +31,10 @@ class ClientDaoLiveTest {
         println(clientDao.getClient(122))
     }
 
-    @Test
+/*    @Test
     fun changeClientData() {
         val id = 481L
         val clientData = mapOf(ClientDataFieldId.EMAIL to "newemail111@email.com")
         clientDao.changeClientData(id, clientData)
-    }
+    }*/
 }

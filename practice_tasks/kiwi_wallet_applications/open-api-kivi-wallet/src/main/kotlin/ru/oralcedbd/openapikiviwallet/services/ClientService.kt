@@ -1,84 +1,40 @@
 package ru.oralcedbd.openapikiviwallet.services
 
 import org.springframework.stereotype.Component
-import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientDataRequestDto
-import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientDataResponseDto
-import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientIdResponseDto
-import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientResponseDto
 import ru.oralcedbd.openapikiviwallet.dao.ClientDao
 import ru.oralcedbd.openapikiviwallet.dao.ClientDataFieldId
 import ru.oralcedbd.openapikiviwallet.model.Client
-import ru.oralcedbd.openapikiviwallet.model.Currency
-import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.getIfNotEmpty
-import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.putIfExists
-import java.util.*
+import ru.oralcedbd.openapikiviwallet.model.ClientData
+import java.util.Optional
 
 interface ClientService {
-    fun createClient(clientDataRequestDto: ClientDataRequestDto): ClientIdResponseDto
-    fun getClient(id: Long): Optional<ClientResponseDto>
-    fun changeClientData(id: Long, clientDataRequestDto: ClientDataRequestDto)
+    fun createClient(createClientData: ClientData): Long
+    fun getClient(id: Long): Optional<Client>
+    fun changeClientData(clientId: Long, clientData: ClientData)
 }
 
 @Component
-class ClientServiceImpl(private val clientDao: ClientDao, private val walletService: WalletService) : ClientService {
+class ClientServiceImpl(
+    private val clientDao: ClientDao
+) : ClientService {
 
-    override fun createClient(clientDataRequestDto: ClientDataRequestDto): ClientIdResponseDto {
-        val clientId = clientDao.createClient(mapDtoToClientData(clientDataRequestDto))
-
-        walletService.createWalletWithAccount(clientId, Currency.RUB, 0F)
-
-        return ClientIdResponseDto(clientId)
+    override fun createClient(createClientData: Map<ClientDataFieldId, String>): Long {
+        return clientDao.createClient(createClientData)
     }
 
-    override fun getClient(id: Long): Optional<ClientResponseDto> {
+    override fun getClient(id: Long): Optional<Client> {
         val client = clientDao.getClient(id)
-        val clientData = clientDao.getClientData(id)
 
-        if (client.isPresent) {
-            return Optional.of(mapClientToDto(client.get(), clientData))
+        if (!client.isPresent) {
+            return Optional.empty()
         }
 
-        return Optional.empty()
+        client.get().clientData = clientDao.getClientData(id)
+
+        return client
     }
 
-    override fun changeClientData(id: Long, clientDataRequestDto: ClientDataRequestDto) {
-        clientDao.changeClientData(id, mapDtoToClientData(clientDataRequestDto))
+    override fun changeClientData(clientId: Long, clientData: ClientData) {
+        clientDao.changeClientData(clientId, clientData)
     }
-
-    private fun mapClientToDto(client: Client, clientData: Map<ClientDataFieldId, String>) =
-        ClientResponseDto(
-            client.id,
-            client.isActive,
-            client.isBlocked,
-            client.blocked_reason,
-            mapClientDataToDto(clientData)
-        )
-
-
-    private fun mapClientDataToDto(clientData: Map<ClientDataFieldId, String>): ClientDataResponseDto {
-        val clientDataResponseDto: ClientDataResponseDto = ClientDataResponseDto()
-        with(clientDataResponseDto) {
-            lastName = getIfNotEmpty(ClientDataFieldId.LAST_NAME, clientData)
-            firstName = getIfNotEmpty(ClientDataFieldId.FIRST_NAME, clientData)
-            sureName = getIfNotEmpty(ClientDataFieldId.SURE_NAME, clientData)
-            inn = getIfNotEmpty(ClientDataFieldId.INN, clientData)
-            birthDay = getIfNotEmpty(ClientDataFieldId.BIRTHDAY, clientData)
-            email = getIfNotEmpty(ClientDataFieldId.EMAIL, clientData)
-            mobilePhone = getIfNotEmpty(ClientDataFieldId.MOBILE_PHONE, clientData)
-        }
-        return clientDataResponseDto
-    }
-
-    private fun mapDtoToClientData(clientDataRequestDto: ClientDataRequestDto): Map<ClientDataFieldId, String> {
-        val clientData = HashMap<ClientDataFieldId, String>()
-        putIfExists(clientData, ClientDataFieldId.EMAIL, clientDataRequestDto.email)
-        putIfExists(clientData, ClientDataFieldId.MOBILE_PHONE, clientDataRequestDto.mobilePhone)
-        putIfExists(clientData, ClientDataFieldId.FIRST_NAME, clientDataRequestDto.firstName)
-        putIfExists(clientData, ClientDataFieldId.LAST_NAME, clientDataRequestDto.lastName)
-        putIfExists(clientData, ClientDataFieldId.SURE_NAME, clientDataRequestDto.sureName)
-        putIfExists(clientData, ClientDataFieldId.INN, clientDataRequestDto.inn)
-        putIfExists(clientData, ClientDataFieldId.BIRTHDAY, clientDataRequestDto.birthDay)
-        return clientData
-    }
-
 }
