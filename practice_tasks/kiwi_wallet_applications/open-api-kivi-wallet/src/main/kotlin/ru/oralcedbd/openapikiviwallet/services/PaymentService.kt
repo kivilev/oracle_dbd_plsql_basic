@@ -1,20 +1,21 @@
 package ru.oralcedbd.openapikiviwallet.services
 
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import ru.oralcedbd.openapikiviwallet.api.v1.models.PaymentDetailRequestDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.PaymentDetailResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.PaymentIdResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.PaymentRequestDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.PaymentResponseDto
-import ru.oralcedbd.openapikiviwallet.dao.MapperUtils
 import ru.oralcedbd.openapikiviwallet.dao.PaymentDao
 import ru.oralcedbd.openapikiviwallet.dao.PaymentDetailFieldId
+import ru.oralcedbd.openapikiviwallet.model.Currency
 import ru.oralcedbd.openapikiviwallet.model.Payment
 import ru.oralcedbd.openapikiviwallet.model.PaymentStatus
+import ru.oralcedbd.openapikiviwallet.utils.EnumIdValueMap
 import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.getIfNotEmpty
 import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.putIfExists
 import java.time.ZonedDateTime
-import java.util.*
+import java.util.Optional
 
 interface PaymentService {
     fun createPayment(
@@ -22,10 +23,14 @@ interface PaymentService {
     ): PaymentIdResponseDto
 
     fun getPayment(id: Long): Optional<PaymentResponseDto>
+    fun getPayments(clientId: Long): List<Payment>
 }
 
-@Component
-class PaymentServiceImpl(private val paymentDao: PaymentDao) : PaymentService {
+@Service
+class PaymentServiceImpl(
+    private val paymentDao: PaymentDao,
+    private val currencyEnumIdValueMap: EnumIdValueMap<Int, Currency>
+) : PaymentService {
 
     override fun createPayment(paymentRequestDto: PaymentRequestDto): PaymentIdResponseDto {
         val payment = mapDtoToPayment(paymentRequestDto)
@@ -42,13 +47,17 @@ class PaymentServiceImpl(private val paymentDao: PaymentDao) : PaymentService {
         return Optional.empty()
     }
 
+    override fun getPayments(clientId: Long): List<Payment> {
+        return paymentDao.getPayments(clientId);
+    }
+
     private fun mapDtoToPayment(paymentRequestDto: PaymentRequestDto) =
         Payment(
             null,
             ZonedDateTime.now(),
             paymentRequestDto.fromClientId,
             paymentRequestDto.toClientId,
-            MapperUtils.getCurrencyById(paymentRequestDto.currencyId),
+            currencyEnumIdValueMap.toValue(paymentRequestDto.currencyId),
             paymentRequestDto.summa,
             PaymentStatus.CREATED,
             "",

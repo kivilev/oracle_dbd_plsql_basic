@@ -2,6 +2,7 @@ package ru.oralcedbd.openapikiviwallet.dao
 
 import oracle.jdbc.OracleTypes
 import org.springframework.data.jdbc.support.oracle.BeanPropertyStructMapper
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.SqlOutParameter
 import org.springframework.jdbc.core.SqlParameter
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
@@ -9,12 +10,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall
 import org.springframework.stereotype.Repository
 import ru.oralcedbd.openapikiviwallet.dao.MapperUtils.convertDateToZonedDateTime
 import ru.oralcedbd.openapikiviwallet.dao.MapperUtils.convertPaymentDetailFieldMapToList
-import ru.oralcedbd.openapikiviwallet.dao.MapperUtils.getCurrencyById
-import ru.oralcedbd.openapikiviwallet.dao.MapperUtils.getPaymentStatusById
 import ru.oralcedbd.openapikiviwallet.dao.oratypes.OracleSqlStructArrayValue
 import ru.oralcedbd.openapikiviwallet.dao.oratypes.TPaymentDetail
+import ru.oralcedbd.openapikiviwallet.model.Currency
 import ru.oralcedbd.openapikiviwallet.model.Payment
+import ru.oralcedbd.openapikiviwallet.model.PaymentStatus
 import ru.oralcedbd.openapikiviwallet.utils.EnumIdValueMap
+import java.sql.ResultSet
 import java.sql.Types
 import java.util.Optional
 import javax.sql.DataSource
@@ -23,16 +25,20 @@ interface PaymentDao {
     fun createPayment(payment: Payment): Long
     fun getPayment(paymentId: Long): Optional<Payment>
     fun getPaymentDetail(paymentId: Long): Map<PaymentDetailFieldId, String>
+    fun getPayments(clientId: Long): List<Payment>
 }
 
 @Repository
-class PaymentDaoImpl(dataSource: DataSource) : PaymentDao {
+class PaymentDaoImpl(
+    dataSource: DataSource,
+    private val paymentDetailEnumIdValueMap: EnumIdValueMap<Long, PaymentDetailFieldId>,
+    private val paymentStatusEnumIdValueMap: EnumIdValueMap<Int, PaymentStatus>,
+    private val currencyEnumIdValueMap: EnumIdValueMap<Int, Currency>
+) :
+    PaymentDao {
     private val namedParameterJdbcTemplate: NamedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     private val createPaymentFunc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
     private val changeClientDataProc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
-
-    private val fieldIdMap: EnumIdValueMap<Long, PaymentDetailFieldId> =
-        EnumIdValueMap(PaymentDetailFieldId::class.java, PaymentDetailFieldId::id)
 
     init {
         createPaymentFunc.withCatalogName("payment_api_pack")
@@ -77,20 +83,8 @@ class PaymentDaoImpl(dataSource: DataSource) : PaymentDao {
             namedParameterJdbcTemplate.query(
                 GET_PAYMENT_SQL,
                 mapOf("v_payment_id" to paymentId),
-            ) { rs, _ ->
-                Payment(
-                    rs.getLong("payment_id"),
-                    convertDateToZonedDateTime(rs.getTimestamp("create_dtime")),
-                    rs.getLong("from_client_id"),
-                    rs.getLong("to_client_id"),
-                    getCurrencyById(rs.getInt("currency_id")),
-                    rs.getFloat("summa"),
-                    getPaymentStatusById(
-                        rs.getInt("status")
-                    ),
-                    rs.getString("status_change_reason")
-                )
-            }.firstOrNull()
+                paymentRowMapper
+            ).firstOrNull()
         )
     }
 
@@ -100,10 +94,31 @@ class PaymentDaoImpl(dataSource: DataSource) : PaymentDao {
             mapOf("v_payment_id" to paymentId)
         ) { rs, _ ->
             Pair(
-                fieldIdMap.toValue(rs.getLong("field_id")),
+                paymentDetailEnumIdValueMap.toValue(rs.getLong("field_id")),
                 rs.getString("field_value")
             )
         }.associateBy({ it.first }, { it.second })
+    }
+
+    override fun getPayments(clientId: Long): List<Payment> {
+        return namedParameterJdbcTemplate.query(
+            GET_ALL_PAYMENTS,
+            mapOf("v_client_id" to clientId),
+            paymentRowMapper
+        )
+    }
+
+    private val paymentRowMapper: RowMapper<Payment> = RowMapper { rs: ResultSet, i: Int ->
+        Payment(
+            rs.getLong("payment_id"),
+            convertDateToZonedDateTime(rs.getTimestamp("create_dtime")),
+            rs.getLong("from_client_id"),
+            rs.getLong("to_client_id"),
+            currencyEnumIdValueMap.toValue(rs.getInt("currency_id")),
+            rs.getFloat("summa"),
+            paymentStatusEnumIdValueMap.toValue(rs.getInt("status")),
+            rs.getString("status_change_reason")
+        )
     }
 
     private companion object {
@@ -124,6 +139,20 @@ class PaymentDaoImpl(dataSource: DataSource) : PaymentDao {
             select field_id, field_value 
               from payment_detail 
              where payment_id = :v_payment_id
+        """
+
+        const val GET_ALL_PAYMENTS = """
+            select payment_id
+                  ,create_dtime
+                  ,summa
+                  ,currency_id
+                  ,status
+                  ,status_change_reason
+                  ,from_client_id
+                  ,to_client_id
+              from payment t
+             where from_client_id = :v_client_id
+                or to_client_id = :v_client_id
         """
     }
 }

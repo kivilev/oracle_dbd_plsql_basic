@@ -1,7 +1,7 @@
 package ru.oralcedbd.openapikiviwallet.services
 
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import ru.oralcedbd.openapikiviwallet.model.Currency
 
 
@@ -10,7 +10,7 @@ interface BonusService {
     fun getDefaultAmount(currency: Currency): Float
 }
 
-@Component
+@Service
 class BonusServiceImpl : BonusService {
     private val log = LoggerFactory.getLogger(ClientNotificationServiceKafka::class.java)
 

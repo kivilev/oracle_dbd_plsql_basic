@@ -1,6 +1,6 @@
 package ru.oralcedbd.openapikiviwallet.services
 
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import ru.oralcedbd.openapikiviwallet.dao.ClientDao
 import ru.oralcedbd.openapikiviwallet.dao.ClientDataFieldId
 import ru.oralcedbd.openapikiviwallet.model.Client
@@ -13,7 +13,7 @@ interface ClientService {
     fun changeClientData(clientId: Long, clientData: ClientData)
 }
 
-@Component
+@Service
 class ClientServiceImpl(
     private val clientDao: ClientDao
 ) : ClientService {

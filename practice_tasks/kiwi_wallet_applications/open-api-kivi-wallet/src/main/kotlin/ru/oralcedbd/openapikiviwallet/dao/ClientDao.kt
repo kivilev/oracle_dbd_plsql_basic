@@ -26,14 +26,15 @@ interface ClientDao {
 }
 
 @Repository
-class ClientDaoImpl(dataSource: DataSource) : ClientDao {
+class ClientDaoImpl(
+    dataSource: DataSource,
+    private val clientDataEnumIdValueMap: EnumIdValueMap<Long, ClientDataFieldId>
+) : ClientDao {
 
     private val namedParameterJdbcTemplate: NamedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     private val createClientFunc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
     private val changeClientDataProc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
 
-    private val fieldIdMap: EnumIdValueMap<Long, ClientDataFieldId> =
-        EnumIdValueMap(ClientDataFieldId::class.java, ClientDataFieldId::id)
 
     init {
         createClientFunc.withCatalogName("client_api_pack")
@@ -94,7 +95,7 @@ class ClientDaoImpl(dataSource: DataSource) : ClientDao {
             mapOf("v_client_id" to id)
         ) { rs, _ ->
             Pair(
-                fieldIdMap.toValue(rs.getLong("field_id")),
+                clientDataEnumIdValueMap.toValue(rs.getLong("field_id")),
                 rs.getString("field_value")
             )
         }.associateBy({ it.first }, { it.second })

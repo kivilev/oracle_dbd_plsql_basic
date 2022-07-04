@@ -1,4 +1,4 @@
-package ru.oralcedbd.openapikiviwallet.facade
+package ru.oralcedbd.openapikiviwallet.services.facade
 
 import org.springframework.stereotype.Service
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientCreateResponseDto
@@ -12,20 +12,20 @@ import ru.oralcedbd.openapikiviwallet.services.ClientService
 import ru.oralcedbd.openapikiviwallet.services.WalletService
 import java.util.Optional
 
-interface ClientFacade {
+interface ClientManagerService {
     fun createClient(clientDataRequestDto: ClientDataRequestDto): ClientCreateResponseDto
     fun getClient(id: Long): Optional<ClientResponseDto>
     fun changeClientData(id: Long, clientDataRequestDto: ClientDataRequestDto)
 }
 
 @Service
-class ClientFacadeImpl(
+class ClientManagerServiceImpl(
     private val clientService: ClientService,
     private val walletService: WalletService,
     private val bonusService: BonusService,
     private val notificationService: ClientNotificationService,
     private val clientDtoMapper: ClientDtoMapper
-) : ClientFacade {
+) : ClientManagerService {
     override fun createClient(clientDataRequestDto: ClientDataRequestDto): ClientCreateResponseDto {
         val clientData = clientDtoMapper.mapClientCreateRequest(clientDataRequestDto)
 
