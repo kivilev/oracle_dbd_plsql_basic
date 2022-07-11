@@ -39,3 +39,6 @@ Content-Type: application/json
   "inn": "098765432111"
 }
 
+
+### Получение информации по балансам пользователя
+GET http://localhost:8080/api/v1/clients/1181/balances

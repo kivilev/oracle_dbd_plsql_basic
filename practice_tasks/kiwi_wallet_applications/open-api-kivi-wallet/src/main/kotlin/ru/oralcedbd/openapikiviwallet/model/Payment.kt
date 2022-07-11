@@ -3,6 +3,8 @@ package ru.oralcedbd.openapikiviwallet.model
 import ru.oralcedbd.openapikiviwallet.dao.PaymentDetailFieldId
 import java.time.ZonedDateTime
 
+typealias PaymentDetail = Map<PaymentDetailFieldId, String>
+
 data class Payment(
     val id: Long?,
     val paymentDateTime: ZonedDateTime,
@@ -27,5 +29,5 @@ data class Payment(
         this.paymentDetail = paymentDetail
     }
 
-    var paymentDetail: Map<PaymentDetailFieldId, String> = mapOf()
+    var paymentDetail: PaymentDetail = mapOf()
 }

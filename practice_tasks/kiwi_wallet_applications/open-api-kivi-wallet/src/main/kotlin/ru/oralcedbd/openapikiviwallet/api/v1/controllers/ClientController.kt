@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import ru.oralcedbd.openapikiviwallet.api.v1.controllers.RestErrors.ERROR_MESSAGE_CLIENT_NOT_FOUND
+import ru.oralcedbd.openapikiviwallet.api.v1.models.AccountsResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientCreateResponseDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientDataRequestDto
 import ru.oralcedbd.openapikiviwallet.api.v1.models.ClientResponseDto
 import ru.oralcedbd.openapikiviwallet.services.facade.ClientManagerService
+import ru.oralcedbd.openapikiviwallet.services.facade.WalletManagerService
 
 
 @RestController
@@ -22,7 +24,10 @@ import ru.oralcedbd.openapikiviwallet.services.facade.ClientManagerService
     "/api/v1/clients",
     produces = [org.springframework.http.MediaType.APPLICATION_JSON_VALUE]
 )
-class ClientController(private val clientManagerService: ClientManagerService) {
+class ClientController(
+    private val clientManagerService: ClientManagerService,
+    private val walletManagerService: WalletManagerService
+) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -50,5 +55,11 @@ class ClientController(private val clientManagerService: ClientManagerService) {
         val client = clientManagerService.getClient(id)
         if (!client.isPresent) throw ResponseStatusException(HttpStatus.NOT_FOUND, ERROR_MESSAGE_CLIENT_NOT_FOUND)
         return client.get()
+    }
+
+    @GetMapping("{id}/balances")
+    @ResponseStatus(HttpStatus.OK)
+    fun clientBalances(@PathVariable id: Long): List<AccountsResponseDto> {
+        return walletManagerService.getClientBalances(id)
     }
 }
