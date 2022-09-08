@@ -79,5 +79,5 @@ begin
 end;
 /
 
-call hello_world_55;
+call hello_world_55();
 
