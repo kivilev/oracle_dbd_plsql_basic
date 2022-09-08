@@ -7,7 +7,7 @@ data class PaymentResponseDto(
     val createDateTime: ZonedDateTime,
     val fromClientId: Long,
     val toClientId: Long,
-    val summa: Float,
+    val summa: Double,
     val currencyId: Int,
     val status: Int,
     val statusChangeReason: String?,

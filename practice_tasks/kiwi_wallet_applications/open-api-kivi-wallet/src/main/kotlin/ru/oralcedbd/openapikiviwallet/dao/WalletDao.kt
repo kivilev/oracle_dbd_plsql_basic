@@ -77,7 +77,7 @@ class WalletDaoImpl(
                 rs.getLong("wallet_id"),
                 rs.getLong("account_id"),
                 currencyEnumIdValueMap.toValue(rs.getInt("currency_id")),
-                rs.getFloat("balance")
+                rs.getDouble("balance")
             )
         }
     }

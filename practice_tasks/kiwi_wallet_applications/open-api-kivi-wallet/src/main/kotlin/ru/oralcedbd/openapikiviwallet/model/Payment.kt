@@ -11,7 +11,7 @@ data class Payment(
     val fromClientId: Long,
     val toClientId: Long,
     val currency: Currency,
-    val summa: Float,
+    val summa: Double,
     val status: PaymentStatus,
     val statusChangeReason: String?
 ) {
@@ -21,7 +21,7 @@ data class Payment(
         fromClientId: Long,
         toClientId: Long,
         currency: Currency,
-        summa: Float,
+        summa: Double,
         status: PaymentStatus,
         statusChangeReason: String?,
         paymentDetail: Map<PaymentDetailFieldId, String>

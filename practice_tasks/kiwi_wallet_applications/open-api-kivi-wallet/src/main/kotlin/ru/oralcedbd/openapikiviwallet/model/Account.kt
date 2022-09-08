@@ -5,5 +5,5 @@ data class Account(
     val walletId: Long,
     val accountId: Long,
     val currency: Currency,
-    val balance: Float
+    val balance: Double
 )

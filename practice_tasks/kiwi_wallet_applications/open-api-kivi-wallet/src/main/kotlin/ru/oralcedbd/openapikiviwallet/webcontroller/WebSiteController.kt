@@ -29,7 +29,7 @@ class WebSiteController(
     ): String {
         val accounts = walletService.getAccounts(clientId);
         val client = clientService.getClient(clientId);
-        var fio: String = ""
+        var fio: String
         with(client.get().clientData) {
             fio =
                 String.format(

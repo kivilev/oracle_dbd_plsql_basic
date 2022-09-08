@@ -1,8 +1,11 @@
-package ru.oralcedbd.openapikiviwallet.dao
+package ru.oralcedbd.openapikiviwallet.dao.live
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import ru.oralcedbd.openapikiviwallet.dao.ClientDao
+import ru.oralcedbd.openapikiviwallet.dao.ClientDataFieldId
+import ru.oralcedbd.openapikiviwallet.dao.WalletDao
 import ru.oralcedbd.openapikiviwallet.model.Currency
 
 @SpringBootTest

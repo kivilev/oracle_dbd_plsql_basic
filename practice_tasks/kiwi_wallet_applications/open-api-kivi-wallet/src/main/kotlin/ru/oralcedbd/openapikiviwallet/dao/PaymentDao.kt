@@ -108,14 +108,14 @@ class PaymentDaoImpl(
         )
     }
 
-    private val paymentRowMapper: RowMapper<Payment> = RowMapper { rs: ResultSet, i: Int ->
+    private val paymentRowMapper: RowMapper<Payment> = RowMapper { rs: ResultSet, _: Int ->
         Payment(
             rs.getLong("payment_id"),
             convertDateToZonedDateTime(rs.getTimestamp("create_dtime")),
             rs.getLong("from_client_id"),
             rs.getLong("to_client_id"),
             currencyEnumIdValueMap.toValue(rs.getInt("currency_id")),
-            rs.getFloat("summa"),
+            rs.getDouble("summa"),
             paymentStatusEnumIdValueMap.toValue(rs.getInt("status")),
             rs.getString("status_change_reason")
         )

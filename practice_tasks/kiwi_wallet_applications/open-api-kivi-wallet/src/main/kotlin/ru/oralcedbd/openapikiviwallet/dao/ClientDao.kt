@@ -35,7 +35,6 @@ class ClientDaoImpl(
     private val createClientFunc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
     private val changeClientDataProc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
 
-
     init {
         createClientFunc.withCatalogName("client_api_pack")
             .withFunctionName("create_client")
