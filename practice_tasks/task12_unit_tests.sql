@@ -42,7 +42,6 @@ declare
 begin
   block_client(p_client_id    => v_client_id,
                p_block_reason => 'Блокировка в тесте');
-  commit;
 end;
 /
 
@@ -53,7 +52,6 @@ declare
   v_client_id client.client_id%type := 5;
 begin
   unblock_client(p_client_id => v_client_id);
-  commit;
 end;
 /
 
@@ -65,7 +63,6 @@ declare
   v_client_id client.client_id%type := 5;
 begin
   deactivate_client(p_client_id => v_client_id);
-  commit;
 end;
 /
 
@@ -88,7 +85,6 @@ declare
                                                                            '14.07.1983'));
 begin
   insert_or_update_client_data(p_client_id => v_client_id, p_client_data => v_client_data);
-	commit;
 end;
 /
 
@@ -106,7 +102,6 @@ declare
   v_delete_field_ids t_number_array := t_number_array(2, 3);
 begin
   delete_client_data(p_client_id => v_client_id, p_delete_field_ids => v_delete_field_ids);
-	commit;
 end;
 /
 
