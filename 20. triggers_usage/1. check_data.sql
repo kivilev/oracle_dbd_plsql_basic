@@ -55,7 +55,7 @@ before -- до
 insert or update of field_value  -- на вставку или обновление поля field_value
 on payment_detail -- на таблице payment_detail
 for each row -- для каждой стркои
-when(old.field_value <> new.field_value or old.field_value is null or new.field_value is null)-- только когда меняется значение
+when(old.field_value <> new.field_value and (old.field_value is not null and new.field_value is not null))-- только когда меняется значение
 begin
   validation_pack.check_payment_detail_field_value(:new.field_id, :new.field_value);
 end;
