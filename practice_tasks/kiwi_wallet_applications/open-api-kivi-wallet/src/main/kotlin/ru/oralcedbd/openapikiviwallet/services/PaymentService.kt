@@ -47,9 +47,10 @@ class PaymentServiceImpl(
         return Optional.empty()
     }
 
-    override fun getPayments(clientId: Long): List<Payment> {
-        return paymentDao.getPayments(clientId)
-    }
+    override fun getPayments(clientId: Long): List<Payment> =
+        paymentDao.getPayments(clientId).onEach {
+            it.paymentDetail = paymentDao.getPaymentDetail(it.id!!)
+        }
 
     private fun mapDtoToPayment(paymentRequestDto: PaymentRequestDto) =
         Payment(
