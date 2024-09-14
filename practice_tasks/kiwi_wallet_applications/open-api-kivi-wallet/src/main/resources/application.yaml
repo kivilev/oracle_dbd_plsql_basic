@@ -2,9 +2,9 @@ oracle:
   datasource:
     extensions:
       initSql: alter session set current_schema=kivi_core
-    jdbcUrl: jdbc:oracle:thin:@clo-ora21xe
+    jdbcUrl: jdbc:oracle:thin:@ora21xe
     username: kivi_core
-    password: booble34
+    password: booble12
 spring:
   freemarker:
     expose-request-attributes: true
