@@ -66,6 +66,13 @@ insert into client_data_field values (1, 'EMAIL', 'E-mail пользовател
 insert into client_data_field values (2, 'MOBILE_PHONE', 'Номер мобильного телефона');
 insert into client_data_field values (3, 'INN', 'ИНН');
 insert into client_data_field values (4, 'BIRTHDAY', 'Дата рождения');
+insert into client_data_field values (5, 'LAST_NAME', 'Фамлия');
+insert into client_data_field values (6, 'FIRST_NAME', 'Имя');
+insert into client_data_field values (7, 'SURE_NAME', 'Отчество');
+insert into client_data_field values (8, 'IS_TECH_CLIENT', 'Технический ли клиент. 1 - да, 0 - нет');
+insert into client_data_field values (9, 'TECH_NAME', 'Наименование для технического клиента');
+insert into client_data_field values (10, 'TECH_ADDRESS', 'Технический адрес');
+
 commit;
 
 -------- Создание сущности "Данные клиента"
@@ -131,7 +138,7 @@ comment on column payment.currency_id is 'В какой валюте произ�
 comment on column payment.from_client_id is 'Клиент-отправитель';
 comment on column payment.to_client_id is 'Клиент-получатель';
 comment on column payment.status is 'Статус платежа. 0 - создан, 1 - проведен, 2 - ошибка проведения, 3 - отмена платежа';
-comment on column payment.status_change_reason is 'Причина изменения стуса платежа. Заполняется для статусов "2" и "3"';
+comment on column payment.status_change_reason is 'Причина изменения статуса платежа. Заполняется для статусов "2" и "3"';
 comment on column payment.create_dtime_tech is 'Техническое поле. Дата создания записи';
 comment on column payment.update_dtime_tech is 'Техническое поле. Дата обновления записи';
 

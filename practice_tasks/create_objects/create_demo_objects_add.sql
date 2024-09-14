@@ -59,7 +59,8 @@ comment on table account is 'Счет кошелька';
 -- add comments to the columns 
 comment on column account.account_id is 'Уникальный ID счета';
 comment on column account.wallet_id is 'Уникальный ID кошелька';
-comment on column account.currency_id is 'Валюта счета. 840 - USD, 643 - RUB, 978 - EUR'; -- Да, хорошо бы справочник, но ты уже прости въедливый студент :)
+ -- Да, хорошо бы справочник, но ты уже прости въедливый студент :)
+comment on column account.currency_id is 'Валюта счета. 840 - USD, 643 - RUB, 978 - EUR';
 comment on column account.balance is 'Текущий баланс счета';
 comment on column account.create_dtime is 'Техническое поле. Дата создания записи';
 comment on column account.update_dtime is 'Техническое поле. Дата обновления записи';
