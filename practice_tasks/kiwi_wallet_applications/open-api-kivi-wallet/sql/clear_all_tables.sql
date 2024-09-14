@@ -1,4 +1,4 @@
--- Чистка всех таблиц
+-- вЂћРёСЃС‚РєР° РІСЃРµС… С‚Р°Р±Р»РёС†
 call common_pack.enable_manual_changes(); 
 
 delete from account;

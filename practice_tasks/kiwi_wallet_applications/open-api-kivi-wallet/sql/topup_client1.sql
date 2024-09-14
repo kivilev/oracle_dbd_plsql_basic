@@ -1,4 +1,4 @@
------ Зачисляем бабло через терминал.
+----- Р—Р°С‡РёСЃР»СЏРµРј Р±Р°Р±Р»Рѕ С‡РµСЂРµР· С‚РµСЂРјРёРЅР°Р».
 declare
 
   c_payment_detail_field_client_software_id  payment_detail_field.field_id%type := 1;
@@ -13,18 +13,18 @@ declare
                                                                      t_payment_detail(c_payment_detail_field_ip_id,
                                                                                       '199.2.3.222'),
                                                                      t_payment_detail(c_payment_detail_field_note_id,
-                                                                                      'пополнение через терминал'),
+                                                                                      'РїРѕРїРѕР»РЅРµРЅРёРµ С‡РµСЂРµР· С‚РµСЂРјРёРЅР°Р»'),
                                                                      t_payment_detail(c_payment_detail_field_is_checked_fraud_id,
                                                                                       '1'));
 begin
-  v_payment_id := payment_api_pack.create_payment(p_from_client_id => 344, -- id терминала
-                                                  p_to_client_id   => 345, -- id Яковлева
-                                                  p_currency_id    => account_api_pack.c_currency_rub_id, -- rub 
-                                                  p_create_dtime   => systimestamp, -- дата платежа
-                                                  p_summa          => 1000, -- пополняем 1000 рублями
+  v_payment_id := payment_api_pack.create_payment(p_from_client_id => 196, -- id С‚РµСЂРјРёРЅР°Р»Р°
+                                                  p_to_client_id   => 194, -- id РЇРєРѕРІР»РµРІР°
+                                                  p_currency_id    => account_api_pack.c_currency_rub_code, -- rub 
+                                                  p_create_dtime   => systimestamp, -- РґР°С‚Р° РїР»Р°С‚РµР¶Р°
+                                                  p_summa          => 1000, -- РїРѕРїРѕР»РЅСЏРµРј 1000 СЂСѓР±Р»СЏРјРё
                                                   p_payment_detail => v_payment_details);
 
-  dbms_output.put_line('Платеж на пополнение счета. Payment_id: ' ||
+  dbms_output.put_line('РџР»Р°С‚РµР¶ РЅР° РїРѕРїРѕР»РЅРµРЅРёРµ СЃС‡РµС‚Р°. Payment_id: ' ||
                        v_payment_id);
 
   commit;

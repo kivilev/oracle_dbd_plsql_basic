@@ -1,29 +1,29 @@
------ Cîçäàíèå òåõíè÷åñêîãî êëèåíòà - òåğìèíàë\ÀÒÌ ÷åğåç êîòîğûé ìû áóäåì çà÷èñëÿòü áàáëî
+----- CĞ¾Ğ·Ğ´Ğ°Ğ½Ğ¸Ğµ Ñ‚ĞµÑ…Ğ½Ğ¸Ñ‡ĞµÑĞºĞ¾Ğ³Ğ¾ ĞºĞ»Ğ¸ĞµĞ½Ñ‚Ğ° - Ñ‚ĞµÑ€Ğ¼Ğ¸Ğ½Ğ°Ğ»\ĞĞ¢Ğœ Ñ‡ĞµÑ€ĞµĞ· ĞºĞ¾Ñ‚Ğ¾Ñ€Ñ‹Ğ¹ Ğ¼Ñ‹ Ğ±ÑƒĞ´ĞµĞ¼ Ğ·Ğ°Ñ‡Ğ¸ÑĞ»ÑÑ‚ÑŒ Ğ±Ğ°Ğ±Ğ»Ğ¾
 
 declare
-  ñ_client_field_is_tech_client_id client_data_field.field_id%type := 8; -- ßâëÿåòñÿ ëè êëèåíò òåõíè÷åñêèì
-  ñ_client_field_tech_name_id      client_data_field.field_id%type := 9; -- Íàèìåíîâàíèå òåõ êëèåíòà
-  ñ_client_field_tech_address_id   client_data_field.field_id%type := 10; -- Àäğåñ íàõîæäåíèÿ
+  Ñ_client_field_is_tech_client_id client_data_field.field_id%type := 8; -- Ğ¯Ğ²Ğ»ÑĞµÑ‚ÑÑ Ğ»Ğ¸ ĞºĞ»Ğ¸ĞµĞ½Ñ‚ Ñ‚ĞµÑ…Ğ½Ğ¸Ñ‡ĞµÑĞºĞ¸Ğ¼
+  Ñ_client_field_tech_name_id      client_data_field.field_id%type := 9; -- ĞĞ°Ğ¸Ğ¼ĞµĞ½Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ Ñ‚ĞµÑ… ĞºĞ»Ğ¸ĞµĞ½Ñ‚Ğ°
+  Ñ_client_field_tech_address_id   client_data_field.field_id%type := 10; -- ĞĞ´Ñ€ĞµÑ Ğ½Ğ°Ñ…Ğ¾Ğ¶Ğ´ĞµĞ½Ğ¸Ñ
 
   v_client_id  client.client_id%type;
   v_wallet_id  wallet.wallet_id%type;
   v_account_id account.account_id%type;
 
-  v_client_data t_client_data_array := t_client_data_array(t_client_data(ñ_client_field_is_tech_client_id,
+  v_client_data t_client_data_array := t_client_data_array(t_client_data(Ñ_client_field_is_tech_client_id,
                                                                          '1'),
-                                                           t_client_data(ñ_client_field_tech_name_id,
+                                                           t_client_data(Ñ_client_field_tech_name_id,
                                                                          'Terminal_123456'),
-                                                           t_client_data(ñ_client_field_tech_address_id,
-                                                                         'ã. Ìîñêâà, Áîğâèõà, óë. Áîãàòàÿ, 1 (âõîä â Øåñòåğî÷êó)'));
+                                                           t_client_data(Ñ_client_field_tech_address_id,
+                                                                         'Ğ³. ĞœĞ¾ÑĞºĞ²Ğ°, Ğ‘Ğ¾Ñ€Ğ²Ğ¸Ñ…Ğ°, ÑƒĞ». Ğ‘Ğ¾Ğ³Ğ°Ñ‚Ğ°Ñ, 1 (Ğ²Ñ…Ğ¾Ğ´ Ğ² Ğ¨ĞµÑÑ‚ĞµÑ€Ğ¾Ñ‡ĞºÑƒ)'));
 begin
-  -- ñîçäàäèì òåğìèíàë
+  -- ÑĞ¾Ğ·Ğ´Ğ°Ğ´Ğ¸Ğ¼ Ñ‚ĞµÑ€Ğ¼Ğ¸Ğ½Ğ°Ğ»
   v_client_id := client_api_pack.create_client(p_client_data => v_client_data);
 
-  -- ñîçäàäèì êîøåëåê + ğóáëåâûé ñ÷åò ñ òåõíè÷åñêèì 1 ìëí ğóáëåé
+  -- ÑĞ¾Ğ·Ğ´Ğ°Ğ´Ğ¸Ğ¼ ĞºĞ¾ÑˆĞµĞ»ĞµĞº + Ñ€ÑƒĞ±Ğ»ĞµĞ²Ñ‹Ğ¹ ÑÑ‡ĞµÑ‚ Ñ Ñ‚ĞµÑ…Ğ½Ğ¸Ñ‡ĞµÑĞºĞ¸Ğ¼ 1 Ğ¼Ğ»Ğ½ Ñ€ÑƒĞ±Ğ»ĞµĞ¹
   v_wallet_id  := wallet_api_pack.create_wallet(p_client_id => v_client_id);
   v_account_id := account_api_pack.create_account(p_client_id   => v_client_id,
                                                   p_wallet_id   => v_wallet_id,
-                                                  p_currency_id => account_api_pack.c_currency_rub_id,
+                                                  p_currency_id => account_api_pack.c_currency_rub_code,
                                                   p_balance     => 1000000);
 
   dbms_output.put_line('Client id: ' || v_client_id || '. Wallet_id: ' ||

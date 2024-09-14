@@ -1,8 +1,8 @@
-﻿-- Скрипт процессинга
+-- —крипт процессинга
 declare
 
 begin
-  -- проходимся по всем активным платежам от активного не заблокированного клиента к другому
+  -- проходимс¤ по всем активным платежам от активного не заблокированного клиента к другому
   for p in (select p.payment_id,
                    p.currency_id,
                    p.summa,
@@ -17,19 +17,21 @@ begin
                and cl1.is_active = client_api_pack.c_active
               join wallet w1
                 on w1.client_id = cl1.client_id
-               and w1.status_id = wallet_api_pack.c_wallet_status_active
+               and w1.status_id = wallet_api_pack.c_wallet_status_normal
               join client cl2
                 on cl2.client_id = p.to_client_id
                and cl2.is_blocked = client_api_pack.c_not_blocked
                and cl2.is_active = client_api_pack.c_active
               join wallet w2
                 on w2.client_id = cl2.client_id
-               and w2.status_id = wallet_api_pack.c_wallet_status_active
+               and w2.status_id = wallet_api_pack.c_wallet_status_normal
              where p.status = payment_api_pack.c_created) loop
   
     begin
+      dbms_output.put_line('Payment id: '|| p.payment_id||'. Walet_from_id: '|| p.wallet_from_id||
+      '. Walet_to_id: '|| p.wallet_to_id||'. Summa: '||p.summa);
+      
       -- тут могут быть различные проверки и вообще куча другой логики (лимиты, фрауд и т.п.) 
-      dbms_output.put_line('Payment_id: '|| p.payment_id);
      
       -- блокируем оба баланса и переводим денежку
       account_api_pack.transfer_money(p_wallet_from_id => p.wallet_from_id,
