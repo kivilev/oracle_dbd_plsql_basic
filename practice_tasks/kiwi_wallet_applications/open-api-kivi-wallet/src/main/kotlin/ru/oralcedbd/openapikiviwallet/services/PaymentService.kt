@@ -17,28 +17,19 @@ import ru.oralcedbd.openapikiviwallet.utils.MapperUtils.putIfExists
 import java.time.ZonedDateTime
 import java.util.Optional
 
-interface PaymentService {
-    fun createPayment(
-        paymentRequestDto: PaymentRequestDto
-    ): PaymentIdResponseDto
-
-    fun getPayment(id: Long): Optional<PaymentResponseDto>
-    fun getPayments(clientId: Long): List<Payment>
-}
-
 @Service
-class PaymentServiceImpl(
+class PaymentService(
     private val paymentDao: PaymentDao,
     private val currencyEnumIdValueMap: EnumIdValueMap<Int, Currency>
-) : PaymentService {
+) {
 
-    override fun createPayment(paymentRequestDto: PaymentRequestDto): PaymentIdResponseDto {
+    fun createPayment(paymentRequestDto: PaymentRequestDto): PaymentIdResponseDto {
         val payment = mapDtoToPayment(paymentRequestDto)
         payment.paymentDetail = enrichPaymentDetail(payment.paymentDetail)
         return PaymentIdResponseDto(paymentDao.createPayment(payment))
     }
 
-    override fun getPayment(id: Long): Optional<PaymentResponseDto> {
+    fun getPayment(id: Long): Optional<PaymentResponseDto> {
         val payment = paymentDao.getPayment(id)
         val paymentDetail = paymentDao.getPaymentDetail(id)
         if (payment.isPresent) {
@@ -47,7 +38,7 @@ class PaymentServiceImpl(
         return Optional.empty()
     }
 
-    override fun getPayments(clientId: Long): List<Payment> =
+    fun getPayments(clientId: Long): List<Payment> =
         paymentDao.getPayments(clientId).onEach {
             it.paymentDetail = paymentDao.getPaymentDetail(it.id!!)
         }

@@ -11,17 +11,11 @@ import ru.oralcedbd.openapikiviwallet.model.Currency
 import ru.oralcedbd.openapikiviwallet.utils.EnumIdValueMap
 import javax.sql.DataSource
 
-interface WalletDao {
-    fun createWallet(clientId: Long): Long
-    fun addAccount(clientId: Long, walletId: Long, currency: Currency, balance: Float): Long
-    fun getAccounts(clientId: Long): List<Account>
-}
-
 @Repository
-class WalletDaoImpl(
-    private val dataSource: DataSource,
+class WalletDao(
+    dataSource: DataSource,
     private val currencyEnumIdValueMap: EnumIdValueMap<Int, Currency>
-) : WalletDao {
+) {
 
     private val namedParameterJdbcTemplate: NamedParameterJdbcTemplate = NamedParameterJdbcTemplate(dataSource)
     private val createWalletFunc: SimpleJdbcCall = SimpleJdbcCall(dataSource)
@@ -50,13 +44,13 @@ class WalletDaoImpl(
             ).also(SimpleJdbcCall::compile)
     }
 
-    override fun createWallet(clientId: Long): Long {
+    fun createWallet(clientId: Long): Long {
         val params = mapOf("p_client_id" to clientId)
         val result = createWalletFunc.execute(params)
         return result["p_wallet_id"] as Long
     }
 
-    override fun addAccount(clientId: Long, walletId: Long, currency: Currency, balance: Float): Long {
+    fun addAccount(clientId: Long, walletId: Long, currency: Currency, balance: Float): Long {
         val params = mapOf(
             "p_client_id" to clientId,
             "p_wallet_id" to walletId,
@@ -67,7 +61,7 @@ class WalletDaoImpl(
         return result["p_account_id"] as Long
     }
 
-    override fun getAccounts(clientId: Long): List<Account> {
+    fun getAccounts(clientId: Long): List<Account> {
         return namedParameterJdbcTemplate.query(
             GET_ALL_ACCOUNTS,
             mapOf("v_client_id" to clientId)

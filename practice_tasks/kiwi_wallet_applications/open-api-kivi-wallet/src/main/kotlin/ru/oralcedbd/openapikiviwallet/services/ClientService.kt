@@ -7,22 +7,16 @@ import ru.oralcedbd.openapikiviwallet.model.Client
 import ru.oralcedbd.openapikiviwallet.model.ClientData
 import java.util.Optional
 
-interface ClientService {
-    fun createClient(createClientData: ClientData): Long
-    fun getClient(id: Long): Optional<Client>
-    fun changeClientData(clientId: Long, clientData: ClientData)
-}
-
 @Service
-class ClientServiceImpl(
+class ClientService(
     private val clientDao: ClientDao
-) : ClientService {
+) {
 
-    override fun createClient(createClientData: Map<ClientDataFieldId, String>): Long {
+    fun createClient(createClientData: Map<ClientDataFieldId, String>): Long {
         return clientDao.createClient(createClientData)
     }
 
-    override fun getClient(id: Long): Optional<Client> {
+    fun getClient(id: Long): Optional<Client> {
         val client = clientDao.getClient(id)
 
         if (!client.isPresent) {
@@ -34,7 +28,7 @@ class ClientServiceImpl(
         return client
     }
 
-    override fun changeClientData(clientId: Long, clientData: ClientData) {
+    fun changeClientData(clientId: Long, clientData: ClientData) {
         clientDao.changeClientData(clientId, clientData)
     }
 }
