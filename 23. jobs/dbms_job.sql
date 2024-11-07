@@ -4,8 +4,8 @@
 
   Лекция 23. Расписания
   
-  Описание скрипта: современный/актуальный способ создания джобов
-
+  Описание скрипта: устаревший способ создания джобов
+  
 */
 
 ---- Пример 1. Создание, запуск и удаление задачи с использованием DBMS_JOB
@@ -18,9 +18,9 @@ declare
   job_id number;
 begin
   dbms_job.submit(job       => job_id,
-                  what      => 'BEGIN DBMS_OUTPUT.PUT_LINE(''Привет из DBMS_JOB!''); END;',
+                  what      => 'BEGIN dbms_session.sleep(10); END;',
                   next_date => sysdate,
-                  interval  => 'SYSDATE + 1/24' -- Запускать задачу каждый час
+                  interval  => 'SYSDATE + 1/24/60' -- Запускать задачу каждую минуту
                   );
   commit;
   dbms_output.put_line('Создана задача с ID: ' || job_id);
