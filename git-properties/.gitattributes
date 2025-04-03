@@ -1,0 +1,14 @@
+*.sql linguist-detectable=sql
+*.sql linguist-language=sql
+*.tab linguist-detectable=sql
+*.tab linguist-language=sql
+*.pkb linguist-detectable=sql
+*.pkb linguist-language=sql
+*.pks linguist-detectable=sql
+*.pks linguist-language=sql
+*.tbl linguist-detectable=sql
+*.tbl linguist-language=sql
+*.tps linguist-detectable=sql
+*.tps linguist-language=sql
+*.trg linguist-detectable=sql
+*.trg linguist-language=sql
